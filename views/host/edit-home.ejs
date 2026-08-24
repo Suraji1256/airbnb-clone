@@ -1,0 +1,731 @@
+<%- include('../partials/head') %>
+</head>
+
+<body class="min-h-screen bg-gradient-to-br from-rose-50 via-white to-pink-100 font-sans">
+
+    <%- include('../partials/header') %>
+
+    <!-- Main Container -->
+    <main class="flex items-center justify-center py-16 px-4">
+
+        <!-- Card -->
+        <div class="bg-white w-full max-w-lg rounded-3xl shadow-2xl p-10 border border-gray-100">
+
+            <!-- Icon -->
+            <div class="flex justify-center mb-5">
+                <div class="w-20 h-20 rounded-full bg-rose-100 flex items-center justify-center text-4xl">
+                    🏠
+                </div>
+            </div>
+
+            <!-- Heading -->
+            <div class="text-center mb-8">
+                <h1 class="text-4xl font-bold text-rose-600">
+                    <%= editing ? "Edit" : "Register" %> Your Home
+                </h1>
+
+                <p class="text-gray-500 mt-3">
+                    List your property on Airbnb and start earning today.
+                </p>
+            </div>
+
+            <!-- Form -->
+            <form action="/host/<%= editing ? "edit-home" : "add-home" %>" method="POST" enctype="multipart/form-data" class="space-y-6">
+
+                <div>
+                    <input
+                        id="houseId"
+                        type="hidden"
+                        name="id"
+                        value="<%= editing ? home._id : '' %>"
+                        placeholder="Enter your house Id"
+                        class="w-full rounded-xl border border-gray-300 px-4 py-3 focus:border-rose-500 focus:ring-4 focus:ring-rose-200 outline-none transition"
+                    >
+
+                    <label
+                        for="houseName"
+                        class="block text-gray-700 font-semibold mb-2">
+                        House Name
+                    </label>
+
+                    <input
+                        id="houseName"
+                        type="text"
+                        name="houseName"
+                        value="<%= editing ? home.houseName : '' %>"
+                        placeholder="Enter your house name"
+                        required
+                        class="w-full rounded-xl border border-gray-300 px-4 py-3 focus:border-rose-500 focus:ring-4 focus:ring-rose-200 outline-none transition"
+                    >
+
+                    <label
+                        for="Price"
+                        class="block text-gray-700 font-semibold mb-2">
+                        House Price
+                    </label>
+
+                    <input
+                        id="housePrice"
+                        type="text"
+                        name="price"
+                        value="<%= editing ? home.price : '' %>"
+                        placeholder="Price per Night"
+                        required
+                        class="w-full rounded-xl border border-gray-300 px-4 py-3 focus:border-rose-500 focus:ring-4 focus:ring-rose-200 outline-none transition"
+                    >
+
+                    <label
+                        for="Location"
+                        class="block text-gray-700 font-semibold mb-2">
+                        House Location
+                    </label>
+
+                    <input
+                        id="houseLocation"
+                        type="text"
+                        name="location"
+                        value="<%= editing ? home.location : '' %>"
+                        placeholder="Enter your Location"
+                        required
+                        class="w-full rounded-xl border border-gray-300 px-4 py-3 focus:border-rose-500 focus:ring-4 focus:ring-rose-200 outline-none transition"
+                    >
+
+                    <label
+                        for="propertyType"
+                        class="block font-semibold mb-2">
+
+                        Property Type
+
+                    </label>
+
+                <select
+                    id="propertyType"
+                    name="propertyType"
+                    required
+                    class="w-full
+                    rounded-xl
+                    border border-gray-300
+                    px-4 py-3
+                    bg-white
+                    focus:border-rose-500
+                    focus:ring-4
+                    focus:ring-rose-200
+                    outline-none
+                    transition">
+
+                <option value="" disabled selected>
+                    Select Property Type
+                </option>
+
+                <option
+                value="Apartment"
+                <%= editing && home.propertyType === "Apartment" ? "selected" : "" %>>
+                Apartment
+                </option>
+
+        <option
+            value="Villa"
+            <%= editing && home.propertyType === "Villa" ? "selected" : "" %>>
+            Villa
+        </option>
+
+        <option
+            value="House"
+            <%= editing && home.propertyType === "House" ? "selected" : "" %>>
+            House
+        </option>
+
+        <option
+            value="Cabin"
+            <%= editing && home.propertyType === "Cabin" ? "selected" : "" %>>
+            Cabin
+        </option>
+
+    </select>
+
+
+
+
+<!-- ================= Amenities ================= -->
+
+<!-- ================= AMENITIES ================= -->
+
+<div class="mt-8">
+
+    <!-- Section Heading -->
+    <div class="mb-4">
+
+        <label
+            for="amenities"
+            class="block text-lg font-semibold text-gray-900">
+
+            Amenities
+
+        </label>
+
+        <p class="text-sm text-gray-500 mt-1">
+            Select the amenities available at your property.
+        </p>
+
+    </div>
+
+
+    <!-- Amenities Container -->
+    <div
+        class="grid
+               grid-cols-1
+               sm:grid-cols-2
+               lg:grid-cols-3
+               gap-3
+               p-1">
+
+
+        <!-- ================= WIFI ================= -->
+
+        <label
+            class="group
+                   flex
+                   items-center
+                   gap-3
+                   min-h-[64px]
+                   rounded-xl
+                   border
+                   border-gray-200
+                   bg-white
+                   px-4
+                   cursor-pointer
+                   transition-all
+                   duration-200
+                   hover:border-rose-300
+                   hover:bg-rose-50/50
+                   hover:shadow-sm
+                   has-[:checked]:border-rose-500
+                   has-[:checked]:bg-rose-50
+                   has-[:checked]:shadow-sm">
+
+            <input
+                type="checkbox"
+                name="amenities"
+                value="WiFi"
+                class="w-4 h-4
+                       shrink-0
+                       accent-rose-500
+                       cursor-pointer"
+                <%= editing && home.amenities?.includes("WiFi") ? "checked" : "" %>>
+
+
+            <!-- WiFi Icon -->
+            <div
+                class="flex
+                       items-center
+                       justify-center
+                       w-10
+                       h-10
+                       rounded-lg
+                       bg-rose-50
+                       text-rose-500
+                       group-has-[:checked]:bg-rose-100">
+
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.8"
+                    stroke="currentColor"
+                    class="w-5 h-5">
+
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M8.111 16.404a5.5 5.5 0 0 1 7.778 0
+                           M5.282 13.575a9.5 9.5 0 0 1 13.436 0
+                           M2.454 10.747a13.5 13.5 0 0 1 19.092 0
+                           M12 20.25h.008v.008H12v-.008Z"/>
+
+                </svg>
+
+            </div>
+
+            <span class="text-sm font-medium text-gray-700">
+                WiFi
+            </span>
+
+        </label>
+
+
+        <!-- ================= AC ================= -->
+
+        <label
+            class="group
+                   flex
+                   items-center
+                   gap-3
+                   min-h-[64px]
+                   rounded-xl
+                   border
+                   border-gray-200
+                   bg-white
+                   px-4
+                   cursor-pointer
+                   transition-all
+                   duration-200
+                   hover:border-sky-300
+                   hover:bg-sky-50/50
+                   hover:shadow-sm
+                   has-[:checked]:border-sky-500
+                   has-[:checked]:bg-sky-50
+                   has-[:checked]:shadow-sm">
+
+            <input
+                type="checkbox"
+                name="amenities"
+                value="AC"
+                class="w-4 h-4
+                       shrink-0
+                       accent-rose-500
+                       cursor-pointer"
+                <%= editing && home.amenities?.includes("AC") ? "checked" : "" %>>
+
+
+            <!-- AC Icon -->
+            <div
+                class="flex
+                       items-center
+                       justify-center
+                       w-10
+                       h-10
+                       rounded-lg
+                       bg-sky-50
+                       text-sky-500">
+
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.8"
+                    stroke="currentColor"
+                    class="w-5 h-5">
+
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M12 2v20
+                           M4.93 6l14.14 12
+                           M19.07 6 4.93 18
+                           M2 12h20"/>
+
+                </svg>
+
+            </div>
+
+            <span class="text-sm font-medium text-gray-700">
+                AC
+            </span>
+
+        </label>
+
+
+        <!-- ================= PARKING ================= -->
+
+        <label
+            class="group
+                   flex
+                   items-center
+                   gap-3
+                   min-h-[64px]
+                   rounded-xl
+                   border
+                   border-gray-200
+                   bg-white
+                   px-4
+                   cursor-pointer
+                   transition-all
+                   duration-200
+                   hover:border-blue-300
+                   hover:bg-blue-50/50
+                   hover:shadow-sm
+                   has-[:checked]:border-blue-500
+                   has-[:checked]:bg-blue-50
+                   has-[:checked]:shadow-sm">
+
+            <input
+                type="checkbox"
+                name="amenities"
+                value="Parking"
+                class="w-4 h-4
+                       shrink-0
+                       accent-rose-500
+                       cursor-pointer"
+                <%= editing && home.amenities?.includes("Parking") ? "checked" : "" %>>
+
+
+            <!-- Parking Icon -->
+            <div
+                class="flex
+                       items-center
+                       justify-center
+                       w-10
+                       h-10
+                       rounded-lg
+                       bg-blue-50
+                       text-blue-600">
+
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.8"
+                    stroke="currentColor"
+                    class="w-5 h-5">
+
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M8 20V4h5a4 4 0 1 1 0 8H8"/>
+
+                </svg>
+
+            </div>
+
+            <span class="text-sm font-medium text-gray-700">
+                Parking
+            </span>
+
+        </label>
+
+
+        <!-- ================= KITCHEN ================= -->
+
+        <label
+            class="group
+                   flex
+                   items-center
+                   gap-3
+                   min-h-[64px]
+                   rounded-xl
+                   border
+                   border-gray-200
+                   bg-white
+                   px-4
+                   cursor-pointer
+                   transition-all
+                   duration-200
+                   hover:border-orange-300
+                   hover:bg-orange-50/50
+                   hover:shadow-sm
+                   has-[:checked]:border-orange-500
+                   has-[:checked]:bg-orange-50
+                   has-[:checked]:shadow-sm">
+
+            <input
+                type="checkbox"
+                name="amenities"
+                value="Kitchen"
+                class="w-4 h-4
+                       shrink-0
+                       accent-rose-500
+                       cursor-pointer"
+                <%= editing && home.amenities?.includes("Kitchen") ? "checked" : "" %>>
+
+
+            <!-- Kitchen Icon -->
+            <div
+                class="flex
+                       items-center
+                       justify-center
+                       w-10
+                       h-10
+                       rounded-lg
+                       bg-orange-50
+                       text-orange-500">
+
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.8"
+                    stroke="currentColor"
+                    class="w-5 h-5">
+
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M7 2v10
+                           M5 2v4
+                           M9 2v4
+                           M7 12v10
+                           M16 2v20
+                           M16 2c2 2 2 5 0 7"/>
+
+                </svg>
+
+            </div>
+
+            <span class="text-sm font-medium text-gray-700">
+                Kitchen
+            </span>
+
+        </label>
+
+
+        <!-- ================= POOL ================= -->
+
+        <label
+            class="group
+                   flex
+                   items-center
+                   gap-3
+                   min-h-[64px]
+                   rounded-xl
+                   border
+                   border-gray-200
+                   bg-white
+                   px-4
+                   cursor-pointer
+                   transition-all
+                   duration-200
+                   hover:border-cyan-300
+                   hover:bg-cyan-50/50
+                   hover:shadow-sm
+                   has-[:checked]:border-cyan-500
+                   has-[:checked]:bg-cyan-50
+                   has-[:checked]:shadow-sm">
+
+            <input
+                type="checkbox"
+                name="amenities"
+                value="Pool"
+                class="w-4 h-4
+                       shrink-0
+                       accent-rose-500
+                       cursor-pointer"
+                <%= editing && home.amenities?.includes("Pool") ? "checked" : "" %>>
+
+
+            <!-- Pool Icon -->
+            <div
+                class="flex
+                       items-center
+                       justify-center
+                       w-10
+                       h-10
+                       rounded-lg
+                       bg-cyan-50
+                       text-cyan-500">
+
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.8"
+                    stroke="currentColor"
+                    class="w-5 h-5">
+
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M3 18c2 2 4 2 6 0
+                           s4-2 6 0
+                           s4 2 6 0
+                           M8 14V9a4 4 0 1 1 8 0v5"/>
+
+                </svg>
+
+            </div>
+
+            <span class="text-sm font-medium text-gray-700">
+                Pool
+            </span>
+
+        </label>
+
+
+        <!-- ================= TV ================= -->
+
+        <label
+            class="group
+                   flex
+                   items-center
+                   gap-3
+                   min-h-[64px]
+                   rounded-xl
+                   border
+                   border-gray-200
+                   bg-white
+                   px-4
+                   cursor-pointer
+                   transition-all
+                   duration-200
+                   hover:border-purple-300
+                   hover:bg-purple-50/50
+                   hover:shadow-sm
+                   has-[:checked]:border-purple-500
+                   has-[:checked]:bg-purple-50
+                   has-[:checked]:shadow-sm">
+
+            <input
+                type="checkbox"
+                name="amenities"
+                value="TV"
+                class="w-4 h-4
+                       shrink-0
+                       accent-rose-500
+                       cursor-pointer"
+                <%= editing && home.amenities?.includes("TV") ? "checked" : "" %>>
+
+
+            <!-- TV Icon -->
+            <div
+                class="flex
+                       items-center
+                       justify-center
+                       w-10
+                       h-10
+                       rounded-lg
+                       bg-purple-50
+                       text-purple-500">
+
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.8"
+                    stroke="currentColor"
+                    class="w-5 h-5">
+
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M3 6h18v12H3V6Zm6-3 3 3 3-3"/>
+
+                </svg>
+
+            </div>
+
+            <span class="text-sm font-medium text-gray-700">
+                TV
+            </span>
+
+        </label>
+
+    </div>
+
+</div>
+
+
+
+                    <label
+                        for="Photo"
+                        class="block text-gray-700 font-semibold mb-2">
+                        House Photo
+                    </label>
+
+
+    <input
+    id="housePhoto"
+    type="file"
+    name="photo"
+    accept="image/png, image/jpeg, image/jpg, image/webp"
+    class="
+        w-full
+        rounded-xl
+        border
+        border-gray-300
+        bg-white
+        px-3
+        py-2
+        text-sm
+        text-gray-600
+        cursor-pointer
+        shadow-sm
+
+        hover:border-rose-400
+        hover:bg-rose-50
+
+        focus:outline-none
+        focus:border-rose-500
+        focus:ring-2
+        focus:ring-rose-100
+
+        transition-all
+        duration-200
+
+        file:mr-3
+        file:rounded-lg
+        file:border-0
+        file:bg-rose-500
+        file:px-4
+        file:py-2
+        file:text-sm
+        file:font-semibold
+        file:text-white
+        file:cursor-pointer
+
+        file:hover:bg-rose-600
+    "
+>
+                    <label
+                        for="Description"
+                        class="block text-gray-700 font-semibold mb-2">
+                        House Description
+                    </label>
+
+                    <textarea
+                        id="houseDescription"
+                        type="text"
+                        name="description"
+                        placeholder="Describe Your Home"
+                        required
+                        class="w-full rounded-xl border border-gray-300 px-4 py-3 focus:border-rose-500 focus:ring-4 focus:ring-rose-200 outline-none transition"
+                    ><%= editing ? home.description : '' %></textarea>
+
+
+                </div>
+
+                <button
+                    type="submit"
+                    class="w-full bg-rose-500 hover:bg-rose-600 text-white font-semibold py-3 rounded-xl shadow-lg hover:shadow-xl transition duration-300">
+                    <%= editing ? "Update Home" : "+ Add Home" %>
+                </button>
+
+            </form>
+
+            <!-- Divider -->
+            <div class="flex items-center my-8">
+                <div class="flex-grow border-t border-gray-200"></div>
+                <span class="px-3 text-gray-400 text-sm">Host with confidence</span>
+                <div class="flex-grow border-t border-gray-200"></div>
+            </div>
+
+            <!-- Features -->
+            <div class="grid grid-cols-3 gap-4 text-center text-sm">
+
+                <div class="bg-gray-50 rounded-xl p-4">
+                    <div class="text-2xl">💰</div>
+                    <p class="mt-2 font-medium">Earn Money</p>
+                </div>
+
+                <div class="bg-gray-50 rounded-xl p-4">
+                    <div class="text-2xl">🔒</div>
+                    <p class="mt-2 font-medium">Safe Hosting</p>
+                </div>
+
+                <div class="bg-gray-50 rounded-xl p-4">
+                    <div class="text-2xl">🌍</div>
+                    <p class="mt-2 font-medium">Global Guests</p>
+                </div>
+
+            </div>
+
+            <!-- Footer -->
+            <p class="text-center text-gray-500 text-sm mt-8">
+                Your home could be someone's next favorite stay.
+            </p>
+
+        </div>
+
+    </main>
+
+</body>
+
+</html>

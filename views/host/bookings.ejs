@@ -1,0 +1,215 @@
+<%- include("../partials/head") %>
+<%- include("../partials/header") %>
+<%- include("../partials/flash") %>
+
+<main class="max-w-7xl mx-auto px-4 py-8">
+
+    <!-- Header -->
+
+    <div class="mb-8">
+
+        <h1 class="text-3xl md:text-4xl font-bold text-gray-800">
+            Manage Bookings
+        </h1>
+
+        <p class="text-gray-500 mt-2">
+            View and manage bookings for your properties.
+        </p>
+
+    </div>
+
+
+    <% if (bookings.length === 0) { %>
+
+        <div class="bg-white rounded-2xl shadow-md p-10 text-center">
+
+            <div class="text-5xl mb-4">
+                📅
+            </div>
+
+            <h2 class="text-2xl font-semibold">
+                No Bookings Yet
+            </h2>
+
+            <p class="text-gray-500 mt-2">
+                Bookings for your properties will appear here.
+            </p>
+
+        </div>
+
+    <% } else { %>
+
+
+        <div class="bg-white rounded-2xl shadow-md overflow-hidden">
+
+            <div class="overflow-x-auto">
+
+                <table class="w-full">
+
+                    <thead class="bg-gray-50 border-b">
+
+                        <tr>
+
+                            <th class="text-left p-4">
+                                Guest
+                            </th>
+
+                            <th class="text-left p-4">
+                                Property
+                            </th>
+
+                            <th class="text-left p-4">
+                                Check In
+                            </th>
+
+                            <th class="text-left p-4">
+                                Check Out
+                            </th>
+
+                            <th class="text-left p-4">
+                                Amount
+                            </th>
+
+                            <th class="text-left p-4">
+                                Status
+                            </th>
+
+                            <th class="text-left p-4">
+                                Action
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        <% bookings.forEach(booking => { %>
+
+                            <tr class="border-b hover:bg-gray-50">
+
+                                <!-- Guest -->
+
+                                <td class="p-4">
+
+                                    <div class="font-medium">
+
+                                        <%= booking.user?.name ||
+                                            booking.user?.username ||
+                                            "Guest" %>
+
+                                    </div>
+
+                                    <div class="text-sm text-gray-500">
+
+                                        <%= booking.user?.email || "" %>
+
+                                    </div>
+
+                                </td>
+
+
+                                <!-- Property -->
+
+                                <td class="p-4">
+
+                                    <%= booking.home?.houseName ||
+                                        "Property" %>
+
+                                </td>
+
+
+                                <!-- Check In -->
+
+                                <td class="p-4">
+
+                                    <%= booking.checkIn.toDateString() %>
+
+                                </td>
+
+
+                                <!-- Check Out -->
+
+                                <td class="p-4">
+
+                                    <%= booking.checkOut.toDateString() %>
+
+                                </td>
+
+
+                                <!-- Amount -->
+
+                                <td class="p-4 font-semibold">
+
+                                    ₹<%= booking.totalPrice.toLocaleString("en-IN") %>
+
+                                </td>
+
+
+                                <!-- Status -->
+
+                                <td class="p-4">
+
+                                    <% if (booking.status === "Confirmed") { %>
+
+    <span class="bg-green-100 text-green-700
+                 px-3 py-1 rounded-full text-sm">
+
+        ✓ Confirmed
+
+    </span>
+
+<% } else if (booking.status === "Pending") { %>
+
+    <span class="bg-yellow-100 text-yellow-700
+                 px-3 py-1 rounded-full text-sm">
+
+        ⏳ Pending
+
+    </span>
+
+<% } else { %>
+
+    <span class="bg-red-100 text-red-700
+                 px-3 py-1 rounded-full text-sm">
+
+        ✕ Cancelled
+
+    </span>
+
+<% } %>
+
+                                </td>
+
+
+                                <!-- Action -->
+
+                                <td class="p-4">
+
+                                    <a
+                                        href="/host/bookings/<%= booking._id %>"
+                                        class="bg-gray-900 hover:bg-gray-700
+                                               text-white px-4 py-2 rounded-lg">
+
+                                        View
+
+                                    </a>
+
+                                </td>
+
+                            </tr>
+
+                        <% }) %>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    <% } %>
+
+</main>

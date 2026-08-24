@@ -1,0 +1,353 @@
+<%- include("../partials/head") %>
+<%- include("../partials/header") %>
+
+<main class="max-w-3xl mx-auto px-4 py-10">
+
+    <!-- Actions -->
+
+    <div class="flex justify-between items-center mb-6">
+
+        <a
+            href="/payment/history"
+            class="text-gray-600 hover:text-black">
+
+            ← Payment History
+
+        </a>
+
+        <button
+            onclick="window.print()"
+            class="bg-gray-900
+                   hover:bg-gray-700
+                   text-white px-5 py-2
+                   rounded-lg">
+
+            🖨️ Print Receipt
+
+        </button>
+
+    </div>
+
+
+    <!-- Receipt -->
+
+    <div
+        id="receipt"
+        class="bg-white rounded-2xl
+               shadow-lg border
+               border-gray-200
+               overflow-hidden">
+
+
+        <!-- Header -->
+
+        <div class="bg-red-500 text-white
+                    p-8">
+
+            <div class="flex
+                        justify-between
+                        items-start">
+
+                <div>
+
+                    <h1 class="text-3xl font-bold">
+                        Airbnb
+                    </h1>
+
+                    <p class="mt-2 opacity-90">
+                        Payment Receipt
+                    </p>
+
+                </div>
+
+
+                <div class="text-right">
+
+                    <p class="text-sm opacity-90">
+                        Receipt
+                    </p>
+
+                    <p class="font-semibold">
+                        #<%= booking._id %>
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Payment Status -->
+
+        <div class="p-6 border-b">
+
+            <div class="flex
+                        justify-between
+                        items-center">
+
+                <div>
+
+                    <p class="text-gray-500">
+                        Payment Status
+                    </p>
+
+                    <p class="text-green-600
+                              font-bold mt-1">
+
+                        ✓ PAID
+
+                    </p>
+
+                </div>
+
+
+                <div class="text-right">
+
+                    <p class="text-gray-500">
+                        Amount Paid
+                    </p>
+
+                    <p class="text-3xl font-bold mt-1">
+
+                        ₹<%= booking.totalPrice
+                            .toLocaleString("en-IN") %>
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Guest -->
+
+        <div class="p-6 border-b">
+
+            <h2 class="text-xl font-bold mb-4">
+                Guest Details
+            </h2>
+
+            <div class="space-y-2">
+
+                <p>
+
+                    <strong>Name:</strong>
+
+                    <%= booking.user?.name ||
+                        booking.user?.username ||
+                        "Guest" %>
+
+                </p>
+
+                <p>
+
+                    <strong>Email:</strong>
+
+                    <%= booking.user?.email ||
+                        "N/A" %>
+
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- Property -->
+
+        <div class="p-6 border-b">
+
+            <h2 class="text-xl font-bold mb-4">
+                Property Details
+            </h2>
+
+            <p class="font-semibold text-lg">
+
+                <%= booking.home?.houseName ||
+                    "Property" %>
+
+            </p>
+
+            <p class="text-gray-500 mt-1">
+
+                📍 <%= booking.home?.location ||
+                    "Unknown" %>
+
+            </p>
+
+        </div>
+
+
+        <!-- Booking -->
+
+        <div class="p-6 border-b">
+
+            <h2 class="text-xl font-bold mb-4">
+                Booking Details
+            </h2>
+
+
+            <div class="grid grid-cols-1
+                        sm:grid-cols-2 gap-5">
+
+                <div>
+
+                    <p class="text-gray-500">
+                        Check In
+                    </p>
+
+                    <p class="font-medium mt-1">
+
+                        <%= booking.checkIn
+                            .toDateString() %>
+
+                    </p>
+
+                </div>
+
+
+                <div>
+
+                    <p class="text-gray-500">
+                        Check Out
+                    </p>
+
+                    <p class="font-medium mt-1">
+
+                        <%= booking.checkOut
+                            .toDateString() %>
+
+                    </p>
+
+                </div>
+
+
+                <div>
+
+                    <p class="text-gray-500">
+                        Guests
+                    </p>
+
+                    <p class="font-medium mt-1">
+
+                        <%= booking.guests %>
+
+                    </p>
+
+                </div>
+
+
+                <div>
+
+                    <p class="text-gray-500">
+                        Paid On
+                    </p>
+
+                    <p class="font-medium mt-1">
+
+                        <%= booking.paidAt
+                            ? booking.paidAt.toLocaleString("en-IN")
+                            : "N/A" %>
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Transaction -->
+
+        <div class="p-6">
+
+            <h2 class="text-xl font-bold mb-4">
+                Transaction Details
+            </h2>
+
+
+            <div class="space-y-3 text-sm">
+
+                <div class="flex
+                            justify-between
+                            gap-4">
+
+                    <span class="text-gray-500">
+                        Razorpay Payment ID
+                    </span>
+
+                    <span class="font-medium
+                                 break-all">
+
+                        <%= booking.razorpayPaymentId ||
+                            "N/A" %>
+
+                    </span>
+
+                </div>
+
+
+                <div class="flex
+                            justify-between
+                            gap-4">
+
+                    <span class="text-gray-500">
+                        Razorpay Order ID
+                    </span>
+
+                    <span class="font-medium
+                                 break-all">
+
+                        <%= booking.razorpayOrderId ||
+                            "N/A" %>
+
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Footer -->
+
+        <div class="bg-gray-50 p-6 text-center
+                    text-sm text-gray-500">
+
+            Thank you for booking with Airbnb.
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<style>
+
+@media print {
+
+    header,
+    nav,
+    button,
+    main > div:first-child a {
+        display: none !important;
+    }
+
+    body {
+        background: white !important;
+    }
+
+    #receipt {
+        box-shadow: none !important;
+        border: none !important;
+    }
+
+}
+
+</style>

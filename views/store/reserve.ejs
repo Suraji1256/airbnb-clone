@@ -1,0 +1,162 @@
+<!-- Header -->
+<header class="bg-red-500 text-white shadow-md">
+
+    <nav class="max-w-7xl mx-auto px-5 py-3
+                flex items-center justify-between">
+
+        <!-- Left Side Navigation -->
+        <div class="flex items-center">
+
+            <!-- Brand -->
+            <a href="/"
+               class="<%= currentPage === 'index'
+                   ? 'bg-red-600'
+                   : 'hover:bg-red-400' %>
+                   px-4 py-2 rounded-lg
+                   font-bold text-lg
+                   transition duration-200">
+
+                Airbnb
+
+            </a>
+
+
+            <% if (isLoggedIn) { %>
+
+                <!-- Navigation Links -->
+                <div class="ml-5 flex items-center gap-1">
+
+                    <a href="/homes"
+                       class="<%= currentPage === 'Home'
+                           ? 'bg-red-600'
+                           : 'hover:bg-red-400' %>
+                           px-4 py-2 rounded-lg
+                           text-sm font-medium
+                           transition duration-200">
+
+                        List
+
+                    </a>
+
+
+                    <a href="/favourites"
+                       class="<%= currentPage === 'favourites'
+                           ? 'bg-red-600'
+                           : 'hover:bg-red-400' %>
+                           px-4 py-2 rounded-lg
+                           text-sm font-medium
+                           transition duration-200">
+
+                        Favourites
+
+                    </a>
+
+
+                    <a href="/bookings"
+                       class="<%= currentPage === 'bookings'
+                           ? 'bg-red-600'
+                           : 'hover:bg-red-400' %>
+                           px-4 py-2 rounded-lg
+                           text-sm font-medium
+                           transition duration-200">
+
+                        Bookings
+
+                    </a>
+
+
+                    <a href="/host/host-home-list"
+                       class="<%= currentPage === 'host-homes'
+                           ? 'bg-red-600'
+                           : 'hover:bg-red-400' %>
+                           px-4 py-2 rounded-lg
+                           text-sm font-medium
+                           transition duration-200">
+
+                        Host
+
+                    </a>
+
+
+                    <a href="/host/add-home"
+                       class="<%= currentPage === 'addHome'
+                           ? 'bg-red-600'
+                           : 'hover:bg-red-400' %>
+                           px-4 py-2 rounded-lg
+                           text-sm font-medium
+                           transition duration-200">
+
+                        Add Home
+
+                    </a>
+
+                </div>
+
+            <% } %>
+
+        </div>
+
+
+        <!-- Right Side -->
+        <div class="flex items-center gap-2">
+
+            <% if (!isLoggedIn) { %>
+
+                <!-- Sign Up -->
+                <a href="/signup"
+                   class="<%= currentPage === 'signup'
+                       ? 'bg-white text-red-500 shadow-md'
+                       : 'text-white hover:bg-red-400' %>
+                       px-5 py-2 rounded-lg
+                       text-sm font-semibold
+                       transition duration-200">
+
+                    Sign Up
+
+                </a>
+
+
+                <!-- Login -->
+                <a href="/login"
+                   class="<%= currentPage === 'login'
+                       ? 'bg-white text-red-500 shadow-md'
+                       : 'text-white hover:bg-red-400' %>
+                       px-5 py-2 rounded-lg
+                       text-sm font-semibold
+                       transition duration-200">
+
+                    Login
+
+                </a>
+
+
+            <% } else { %>
+
+                <!-- Logout -->
+                <form action="/logout" method="POST">
+
+                    <button
+                        type="submit"
+                        class="bg-white text-red-500
+                               hover:bg-gray-100
+                               px-5 py-2
+                               rounded-lg
+                               text-sm font-semibold
+                               shadow-sm
+                               hover:shadow-md
+                               active:scale-95
+                               transition-all duration-200">
+
+                        Logout
+
+                    </button>
+
+                </form>
+
+            <% } %>
+
+        </div>
+
+    </nav>
+
+</header>

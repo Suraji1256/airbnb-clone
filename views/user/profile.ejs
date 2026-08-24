@@ -1,0 +1,340 @@
+<%- include('../partials/head') %>
+
+<body class="bg-gray-50 min-h-screen">
+
+    <%- include('../partials/header') %>
+
+    <main class="max-w-4xl mx-auto px-4 py-10">
+
+        <!-- Profile Header -->
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+
+            <!-- Cover -->
+            <div class="h-36 bg-gradient-to-r from-red-500 to-pink-500"></div>
+
+            <!-- Profile Info -->
+            <div class="px-6 pb-8">
+
+                <!-- Avatar -->
+                <div class="-mt-12 mb-5">
+                    <div
+                        class="w-24 h-24 rounded-full bg-red-500 border-4 border-white
+                        flex items-center justify-center text-white text-3xl font-bold shadow-md">
+                        <%= user?.name ? user.name.charAt(0).toUpperCase() : 'U' %>
+                    </div>
+                </div>
+
+                <h1 class="text-3xl font-bold text-gray-800">
+                    <%= user?.name || 'User' %>
+                </h1>
+
+                <p class="text-gray-500 mt-1">
+                    <%= user?.email || 'No email available' %>
+                </p>
+
+                <p class="text-sm text-gray-400 mt-2">
+                    Member of Airbnb Clone
+                </p>
+            </div>
+        </div>
+
+
+        <!-- Account Information -->
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-200 mt-6 p-6">
+
+            <h2 class="text-xl font-semibold text-gray-800 mb-6">
+                Account Information
+            </h2>
+
+            <div class="space-y-5">
+
+                <!-- Name -->
+                <div class="flex items-center justify-between border-b pb-4">
+                    <div>
+                        <p class="text-sm text-gray-500">Name</p>
+                        <p class="font-medium text-gray-800">
+                            <%= user?.name || 'Not available' %>
+                        </p>
+                    </div>
+
+                    <a
+    href="/profile/edit"
+    class="text-red-500 hover:text-red-600 font-medium">
+    Edit
+</a>
+                </div>
+
+                <!-- Email -->
+                <div class="flex items-center justify-between border-b pb-4">
+                    <div>
+                        <p class="text-sm text-gray-500">Email</p>
+                        <p class="font-medium text-gray-800">
+                            <%= user?.email || 'Not available' %>
+                        </p>
+                    </div>
+
+                    <a
+    href="/profile/edit"
+    class="text-red-500 hover:text-red-600 font-medium">
+    Edit
+</a>
+                </div>
+
+                <!-- Password -->
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm text-gray-500">Password</p>
+                        <p class="font-medium text-gray-800">
+                            ••••••••
+                        </p>
+                    </div>
+
+                    <a
+    href="/profile/change-password"
+    class="text-red-500 hover:text-red-600 font-medium">
+    Change
+</a>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- My Listings -->
+<div class="bg-white rounded-2xl shadow-sm border border-gray-200 mt-6 p-6">
+
+    <!-- Header -->
+    <div class="flex items-center justify-between mb-6">
+
+        <div>
+            <h2 class="text-xl font-semibold text-gray-800">
+                My Listings
+            </h2>
+
+            <p class="text-sm text-gray-500 mt-1">
+                Homes you have listed
+            </p>
+        </div>
+
+        <a
+            href="/host/add-home"
+            class="bg-red-500 hover:bg-red-600 text-white
+                   px-4 py-2 rounded-lg font-medium transition">
+
+            + Add Home
+
+        </a>
+
+    </div>
+
+
+    <% if (myListings && myListings.length > 0) { %>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+            <% myListings.forEach(home => { %>
+
+                <div
+                    class="border border-gray-200 rounded-xl overflow-hidden
+                           hover:shadow-md transition">
+
+                    <!-- Home Image -->
+                    <div class="h-48 overflow-hidden">
+
+                        <img
+                            src="<%= home.photo %>"
+                            alt="<%= home.houseName %>"
+                            class="w-full h-full object-cover
+                                   hover:scale-105 transition duration-300">
+
+                    </div>
+
+
+                    <!-- Home Details -->
+                    <div class="p-5">
+
+                        <div class="flex justify-between gap-4">
+
+                            <div>
+                                <h3 class="text-lg font-semibold text-gray-800">
+                                    <%= home.houseName %>
+                                </h3>
+
+                                <p class="text-sm text-gray-500 mt-1">
+                                    📍 <%= home.location %>
+                                </p>
+                            </div>
+
+                            <div class="text-sm">
+                                ⭐ <%= home.averageRating.toFixed(1) %>
+                            </div>
+
+                        </div>
+
+
+                        <!-- Property Type -->
+                        <p class="text-sm text-gray-500 mt-3">
+                            <%= home.propertyType %>
+                        </p>
+
+
+                        <!-- Price -->
+                        <p class="text-red-500 font-bold text-lg mt-3">
+                            ₹<%= home.price %>
+
+                            <span class="text-gray-400 text-sm font-normal">
+                                / night
+                            </span>
+                        </p>
+
+
+                        <!-- Reviews -->
+                        <p class="text-sm text-gray-500 mt-1">
+                            <%= home.reviewCount %> reviews
+                        </p>
+
+
+                        <!-- Buttons -->
+                        <div class="flex gap-3 mt-5">
+
+                            <a
+                                href="/homes/<%= home._id %>"
+                                class="flex-1 text-center border
+                                       border-gray-300 rounded-lg py-2
+                                       font-medium hover:bg-gray-50">
+
+                                View
+
+                            </a>
+
+                            <a
+                                href="/host/edit-home/<%= home._id %>"
+                                class="flex-1 text-center bg-gray-900
+                                       text-white rounded-lg py-2
+                                       font-medium hover:bg-gray-800">
+
+                                Edit
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            <% }) %>
+
+        </div>
+
+    <% } else { %>
+
+        <!-- Empty State -->
+        <div class="text-center py-12">
+
+            <div class="text-5xl mb-4">
+                🏠
+            </div>
+
+            <h3 class="text-xl font-semibold text-gray-800">
+                No listings yet
+            </h3>
+
+            <p class="text-gray-500 mt-2">
+                You haven't listed any properties yet.
+            </p>
+
+            <a
+                href="/host/add-home"
+                class="inline-block mt-5 bg-red-500
+                       text-white px-6 py-3 rounded-xl
+                       font-semibold hover:bg-red-600 transition">
+
+                Add Your First Home
+
+            </a>
+
+        </div>
+
+    <% } %>
+
+</div>
+
+
+        <!-- Quick Actions -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-6">
+
+            <a
+                href="/bookings"
+                class="bg-white border border-gray-200 rounded-xl p-5
+                       hover:shadow-md transition">
+
+                <div class="text-2xl mb-2">📅</div>
+
+                <h3 class="font-semibold text-gray-800">
+                    My Bookings
+                </h3>
+
+                <p class="text-sm text-gray-500 mt-1">
+                    View your reservations
+                </p>
+            </a>
+
+
+            <a
+                href="/favourites"
+                class="bg-white border border-gray-200 rounded-xl p-5
+                       hover:shadow-md transition">
+
+                <div class="text-2xl mb-2">❤️</div>
+
+                <h3 class="font-semibold text-gray-800">
+                    Favourites
+                </h3>
+
+                <p class="text-sm text-gray-500 mt-1">
+                    View saved homes
+                </p>
+            </a>
+
+
+            <a
+                href="/host/add-home"
+                class="bg-white border border-gray-200 rounded-xl p-5
+                       hover:shadow-md transition">
+
+                <div class="text-2xl mb-2">🏠</div>
+
+                <h3 class="font-semibold text-gray-800">
+                    Become a Host
+                </h3>
+
+                <p class="text-sm text-gray-500 mt-1">
+                    List your property
+                </p>
+            </a>
+
+        </div>
+
+
+        <!-- Logout -->
+        <div class="mt-8 text-center">
+
+            <form action="/logout" method="POST">
+
+                <button
+                    type="submit"
+                    class="px-6 py-3 bg-red-500 text-white rounded-xl
+                           font-semibold hover:bg-red-600 transition">
+
+                    Logout
+
+                </button>
+
+            </form>
+
+        </div>
+
+    </main>
+
+</body>
+</html>

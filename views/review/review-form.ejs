@@ -1,0 +1,71 @@
+<%- include("../partials/head") %>
+<%- include("../partials/header") %>
+
+<main class="max-w-2xl mx-auto py-10 px-4">
+
+<div class="bg-white rounded-xl shadow-lg p-8">
+
+<h1 class="text-3xl font-bold mb-6">
+
+Review
+
+<%= booking.home.houseName %>
+
+</h1>
+
+<form action="/review" method="POST">
+
+<input
+type="hidden"
+name="bookingId"
+value="<%= booking._id %>">
+
+<div class="mb-5">
+
+<label class="font-semibold">
+Rating
+</label>
+
+<select
+name="rating"
+class="w-full border rounded-lg p-3 mt-2">
+
+<option value="5">⭐⭐⭐⭐⭐ Excellent</option>
+<option value="4">⭐⭐⭐⭐ Very Good</option>
+<option value="3">⭐⭐⭐ Good</option>
+<option value="2">⭐⭐ Fair</option>
+<option value="1">⭐ Poor</option>
+
+</select>
+
+</div>
+
+<div class="mb-5">
+
+<label class="font-semibold">
+
+Comment
+
+</label>
+
+<textarea
+name="comment"
+rows="5"
+required
+class="w-full border rounded-lg p-3 mt-2"
+placeholder="Share your experience..."></textarea>
+
+</div>
+
+<button
+class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg">
+
+Submit Review
+
+</button>
+
+</form>
+
+</div>
+
+</main>

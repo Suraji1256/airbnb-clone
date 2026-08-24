@@ -1,0 +1,7 @@
+@import "tailwindcss";
+
+/* Tell Tailwind where your EJS files are */
+@source "./views";
+@source "./views/**/*.ejs";
+@source "./public";
+@source "./public/**/*.js";

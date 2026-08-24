@@ -1,0 +1,470 @@
+<%- include('../partials/head') %>
+</head>
+
+<body class="bg-gray-100 font-sans">
+    <%- include('../partials/header') %>
+    <%- include("../partials/flash") %>
+
+
+    <!-- ================= Search Section ================= -->
+
+<div class="bg-white rounded-2xl shadow-md border border-gray-100 p-6 mb-10">
+
+    <form action="/homes" method="GET">
+
+        <!-- ================= ROW 1 ================= -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+
+    <!-- Location -->
+    <div>
+        <label class="block text-sm font-semibold text-gray-700 mb-2">
+            📍 Location
+        </label>
+
+        <input
+            type="text"
+            name="location"
+            value="<%= location || '' %>"
+            placeholder="Search location"
+            class="w-full border border-gray-300 rounded-lg p-3
+                   focus:outline-none focus:ring-2 focus:ring-red-400">
+    </div>
+
+
+    <!-- House Name -->
+    <div>
+        <label class="block text-sm font-semibold text-gray-700 mb-2">
+            🏠 House Name
+        </label>
+
+        <input
+            type="text"
+            name="keyword"
+            value="<%= keyword || '' %>"
+            placeholder="Search house"
+            class="w-full border border-gray-300 rounded-lg p-3
+                   focus:outline-none focus:ring-2 focus:ring-red-400">
+    </div>
+
+
+    <!-- Property Type -->
+    <div>
+        <label class="block text-sm font-semibold text-gray-700 mb-2">
+            🏡 Property Type
+        </label>
+
+        <select
+            name="propertyType"
+            class="w-full border border-gray-300 rounded-lg p-3
+                   focus:outline-none focus:ring-2 focus:ring-red-400">
+
+            <option value="">All Properties</option>
+
+            <option
+                value="Apartment"
+                <%= propertyType === "Apartment" ? "selected" : "" %>>
+                Apartment
+            </option>
+
+            <option
+                value="Villa"
+                <%= propertyType === "Villa" ? "selected" : "" %>>
+                Villa
+            </option>
+
+            <option
+                value="House"
+                <%= propertyType === "House" ? "selected" : "" %>>
+                House
+            </option>
+
+            <option
+                value="Cabin"
+                <%= propertyType === "Cabin" ? "selected" : "" %>>
+                Cabin
+            </option>
+
+        </select>
+    </div>
+
+</div>
+
+
+        <!-- ================= ROW 2 ================= -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-5">
+
+            <!-- Minimum Price -->
+            <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-2">
+                    💰 Minimum Price
+                </label>
+
+                <input
+                    type="number"
+                    name="minPrice"
+                    value="<%= minPrice || '' %>"
+                    placeholder="₹ Minimum"
+                    min="0"
+                    class="w-full border border-gray-300 rounded-lg p-3
+                           focus:outline-none focus:ring-2 focus:ring-red-400">
+            </div>
+
+
+            <!-- Maximum Price -->
+            <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-2">
+                    💰 Maximum Price
+                </label>
+
+                <input
+                    type="number"
+                    name="maxPrice"
+                    value="<%= maxPrice || '' %>"
+                    placeholder="₹ Maximum"
+                    min="0"
+                    class="w-full border border-gray-300 rounded-lg p-3
+                           focus:outline-none focus:ring-2 focus:ring-red-400">
+            </div>
+
+
+            <!-- Sort -->
+            <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-2">
+                    🔄 Sort By
+                </label>
+
+                <select
+                    name="sort"
+                    class="w-full border border-gray-300 rounded-lg p-3
+                           focus:outline-none focus:ring-2 focus:ring-red-400">
+
+                    <option value="">Newest</option>
+
+                    <option
+                        value="low"
+                        <%= sort === "low" ? "selected" : "" %>>
+                        Price: Low → High
+                    </option>
+
+                    <option
+                        value="high"
+                        <%= sort === "high" ? "selected" : "" %>>
+                        Price: High → Low
+                    </option>
+
+                    <option
+                        value="rating"
+                        <%= sort === "rating" ? "selected" : "" %>>
+                        Highest Rated
+                    </option>
+
+                </select>
+            </div>
+
+        </div>
+
+        <!-- ================= BUTTONS ================= -->
+<div class="flex flex-col sm:flex-row gap-3 mt-7 w-full">
+
+    <button
+        type="submit"
+        class="flex-1 w-full bg-red-500 hover:bg-red-600 text-white
+               font-semibold px-7 py-3 rounded-lg
+               transition duration-200">
+
+        🔍 Search Homes
+
+    </button>
+
+    <a
+        href="/homes"
+        class="flex-1 w-full bg-gray-100 hover:bg-gray-200 text-gray-700
+               font-semibold px-7 py-3 rounded-lg text-center
+               transition duration-200">
+
+        Reset Filters
+
+    </a>
+
+</div>
+
+    </form>
+
+</div>
+
+
+
+
+
+    <!-- Main Section -->
+    <main class="max-w-7xl mx-auto px-4 py-10">
+
+        
+
+    <!-- Heading -->
+    <div class="text-center mb-10">
+        <h2 class="text-4xl font-bold text-gray-800">
+            🏠 Our Registered Homes
+        </h2>
+        <p class="text-gray-500 mt-2">
+            Find your perfect stay from our collection.
+        </p>
+    </div>
+
+    <!-- Home Grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+
+        <% registeredHomes.forEach(home => { %>
+
+        <div class="bg-white rounded-2xl shadow-md hover:shadow-xl hover:-translate-y-1 transition duration-300 overflow-hidden">
+
+            <!-- Image -->
+            <div class="relative">
+
+                <img
+                    src="<%= home.photo %>"
+                    alt="<%= home.houseName %>"
+                    class="w-full h-52 object-cover">
+
+                <span class="absolute top-3 right-3 bg-white px-3 py-1 rounded-full shadow text-sm font-semibold">
+                    <% if(home.reviewCount > 0){ %>
+
+⭐ <%= Number(home.averageRating).toFixed(1) %>
+<span class="text-gray-500">
+    (<%= home.reviewCount %>)
+</span>
+
+<% } else { %>
+
+<span class="text-gray-500">
+    New
+</span>
+
+<% } %>
+                </span>
+
+            </div>
+
+            <!-- Content -->
+            <div class="p-5">
+                
+                <h3 class="text-xl font-bold text-gray-400 truncate">
+                    <h2 class="text-black">House Name : <%= home.houseName %></h2>
+                    
+                </h3>
+
+        <div class="flex items-center mt-2 text-shadow-black text-sm">
+            <h2>Location : <%= home.location %></span></h2>
+                    
+        </div>
+
+                <div class="flex items-center justify-between mt-5">
+
+                    <div>
+                        <p class="text-2xl font-bold text-rose-600">
+                            ₹<%= home.price %>
+                        </p>
+                        <span class="text-sm text-gray-500">
+                            / night
+                        </span>
+                    </div>
+
+                    <span class="bg-green-100 text-green-700 text-xs font-semibold px-3 py-1 rounded-full">
+                        Available
+                    </span>
+
+                </div>
+
+                <!-- Buttons -->
+<div class="grid grid-cols-2 gap-3 mt-6">
+
+    <!-- Favourite Button -->
+    <div class="w-full">
+        <%- include('../partials/favourite', { home: home }) %>
+    </div>
+
+    <!-- Details Button -->
+    <a href="/homes/<%= home._id %>"
+       class="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-xl shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300">
+
+        Details
+    </a>
+
+</div>
+
+            </div>
+
+        </div>
+
+        <% }) %>
+
+    </div>
+
+    <!-- ================= PAGINATION ================= -->
+
+<!-- ================= PAGINATION ================= -->
+
+<!-- ================= PAGINATION ================= -->
+
+<% if (totalPages > 1) { %>
+
+<div class="flex justify-center items-center gap-2 mt-10 mb-10 flex-wrap">
+
+    <!-- Previous Button -->
+
+    <% if (currentPageNumber > 1) { %>
+
+        <a
+            href="?<%= new URLSearchParams({
+                ...queryParams,
+                page: currentPageNumber - 1
+            }).toString() %>"
+            class="px-4 py-2 rounded-lg border border-gray-300
+                   bg-white hover:bg-gray-100 transition">
+
+            ← Previous
+
+        </a>
+
+    <% } else { %>
+
+        <span
+            class="px-4 py-2 rounded-lg border border-gray-200
+                   text-gray-400 bg-gray-100 cursor-not-allowed">
+
+            ← Previous
+
+        </span>
+
+    <% } %>
+
+
+    <!-- Page 1 -->
+
+    <a
+        href="?<%= new URLSearchParams({
+            ...queryParams,
+            page: 1
+        }).toString() %>"
+        class="px-4 py-2 rounded-lg border
+               <%= currentPageNumber === 1
+                    ? 'bg-red-500 text-white border-red-500'
+                    : 'border-gray-300 bg-white hover:bg-gray-100' %>">
+
+        1
+
+    </a>
+
+
+    <!-- Middle Pages -->
+
+    <% let startPage = Math.max(2, currentPageNumber - 1); %>
+
+    <% let endPage = Math.min(totalPages - 1, currentPageNumber + 1); %>
+
+
+    <!-- Left Ellipsis -->
+
+    <% if (startPage > 2) { %>
+
+        <span class="px-2 py-2 text-gray-500">
+
+            ...
+
+        </span>
+
+    <% } %>
+
+
+    <!-- Middle Page Numbers -->
+
+    <% for (let i = startPage; i <= endPage; i++) { %>
+
+        <a
+            href="?<%= new URLSearchParams({
+                ...queryParams,
+                page: i
+            }).toString() %>"
+            class="px-4 py-2 rounded-lg border
+                   <%= currentPageNumber === i
+                        ? 'bg-red-500 text-white border-red-500'
+                        : 'border-gray-300 bg-white hover:bg-gray-100' %>">
+
+            <%= i %>
+
+        </a>
+
+    <% } %>
+
+
+    <!-- Right Ellipsis -->
+
+    <% if (endPage < totalPages - 1) { %>
+
+        <span class="px-2 py-2 text-gray-500">
+
+            ...
+
+        </span>
+
+    <% } %>
+
+
+    <!-- Last Page -->
+
+    <% if (totalPages > 1) { %>
+
+        <a
+            href="?<%= new URLSearchParams({
+                ...queryParams,
+                page: totalPages
+            }).toString() %>"
+            class="px-4 py-2 rounded-lg border
+                   <%= currentPageNumber === totalPages
+                        ? 'bg-red-500 text-white border-red-500'
+                        : 'border-gray-300 bg-white hover:bg-gray-100' %>">
+
+            <%= totalPages %>
+
+        </a>
+
+    <% } %>
+
+
+    <!-- Next Button -->
+
+    <% if (currentPageNumber < totalPages) { %>
+
+        <a
+            href="?<%= new URLSearchParams({
+                ...queryParams,
+                page: currentPageNumber + 1
+            }).toString() %>"
+            class="px-4 py-2 rounded-lg border border-gray-300
+                   bg-white hover:bg-gray-100 transition">
+
+            Next →
+
+        </a>
+
+    <% } else { %>
+
+        <span
+            class="px-4 py-2 rounded-lg border border-gray-200
+                   text-gray-400 bg-gray-100 cursor-not-allowed">
+
+            Next →
+
+        </span>
+
+    <% } %>
+
+</div>
+
+<% } %>
+
+</main>
+
+</body>
+</html>
+</html>

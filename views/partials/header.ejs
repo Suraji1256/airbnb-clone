@@ -1,0 +1,784 @@
+<!-- ================= HEADER ================= -->
+<header
+    class="relative z-[100] bg-[#ef4444] text-white shadow-[0_3px_10px_rgba(0,0,0,0.15)]"
+>
+
+    <nav
+    class="mx-auto flex max-w-7xl items-center
+           justify-between
+           px-3 sm:px-5
+           py-3">
+
+        <!-- ================= LEFT SIDE ================= -->
+        <div class="flex min-w-0 items-center gap-[5px]">
+
+            <!-- BRAND -->
+            <a
+                href="/"
+                class="
+                    inline-flex items-center
+                    whitespace-nowrap
+                    rounded-lg
+                    px-[15px] py-[9px]
+                    text-xl font-bold
+                    text-white no-underline
+                    transition duration-200
+                    hover:bg-[#f87171]
+                    active:scale-[0.97]
+                    <%= currentPage === 'index'
+                        ? 'bg-[#dc2626]'
+                        : '' %>
+                "
+            >
+                Airbnb
+            </a>
+
+
+            <!-- ================= MOBILE MENU BUTTON ================= -->
+            <button
+                type="button"
+                class="
+                    inline-flex h-10 w-10
+                    items-center justify-center
+                    rounded-lg
+                    border-0
+                    bg-transparent
+                    text-2xl leading-none text-white
+                    transition duration-200
+                    hover:bg-[#f87171]
+                    active:scale-[0.94]
+                    md:hidden
+                "
+                onclick="toggleMobileMenu()"
+                aria-label="Open navigation menu"
+            >
+                ☰
+            </button>
+
+
+            <!-- ================= DESKTOP NAVIGATION ================= -->
+
+            <% if (isLoggedIn) { %>
+
+                <div
+                    class="
+                        hidden
+                        items-center
+                        gap-1
+                        ml-5
+                        md:flex
+                    "
+                >
+
+                    <% if (user && user.userType === "guest") { %>
+
+                        <!-- LIST -->
+                        <a
+                            href="/homes"
+                            class="
+                                inline-flex items-center justify-center
+                                gap-[7px]
+                                whitespace-nowrap
+                                rounded-lg
+                                px-[14px] py-[9px]
+                                text-sm font-medium
+                                text-white no-underline
+                                transition duration-200
+                                hover:bg-[#f87171]
+                                active:scale-[0.97]
+                                <%= currentPage === 'Home'
+                                    ? 'bg-[#dc2626] shadow-[inset_0_-2px_0_rgba(255,255,255,0.15),0_2px_5px_rgba(0,0,0,0.08)]'
+                                    : '' %>
+                            "
+                        >
+                            List
+                        </a>
+
+
+                        <!-- FAVOURITES -->
+                        <a
+                            href="/favourites"
+                            class="
+                                inline-flex items-center justify-center
+                                gap-[7px]
+                                whitespace-nowrap
+                                rounded-lg
+                                px-[14px] py-[9px]
+                                text-sm font-medium
+                                text-white no-underline
+                                transition duration-200
+                                hover:bg-[#f87171]
+                                active:scale-[0.97]
+                                <%= currentPage === 'favourites'
+                                    ? 'bg-[#dc2626] shadow-[inset_0_-2px_0_rgba(255,255,255,0.15),0_2px_5px_rgba(0,0,0,0.08)]'
+                                    : '' %>
+                            "
+                        >
+                            Favourites
+                        </a>
+
+
+                        <!-- BOOKINGS -->
+                        <a
+                            href="/bookings"
+                            class="
+                                inline-flex items-center justify-center
+                                gap-[7px]
+                                whitespace-nowrap
+                                rounded-lg
+                                px-[14px] py-[9px]
+                                text-sm font-medium
+                                text-white no-underline
+                                transition duration-200
+                                hover:bg-[#f87171]
+                                active:scale-[0.97]
+                                <%= currentPage === 'bookings'
+                                    ? 'bg-[#dc2626] shadow-[inset_0_-2px_0_rgba(255,255,255,0.15),0_2px_5px_rgba(0,0,0,0.08)]'
+                                    : '' %>
+                            "
+                        >
+                            Bookings
+                        </a>
+
+                       <!-- Payment History -->
+                        <a
+                            href="/payment/history"
+                           class="
+                                inline-flex items-center justify-center
+                                gap-[7px]
+                                whitespace-nowrap
+                                rounded-lg
+                                px-[14px] py-[9px]
+                                text-sm font-medium
+                                text-white no-underline
+                                transition duration-200
+                                hover:bg-[#f87171]
+                                active:scale-[0.97]
+                                <%= currentPage === 'payment-history'
+                                    ? 'bg-[#dc2626] shadow-[inset_0_-2px_0_rgba(255,255,255,0.15),0_2px_5px_rgba(0,0,0,0.08)]'
+                                    : '' %>
+                            "
+                        >
+
+                            Payments
+
+                        </a>
+
+                    <% } else if (user && user.userType === "host") { %>
+
+                        <!-- Payment History -->
+                        <a
+                            href="/payment/history"
+                           class="
+                                inline-flex items-center justify-center
+                                gap-[7px]
+                                whitespace-nowrap
+                                rounded-lg
+                                px-[14px] py-[9px]
+                                text-sm font-medium
+                                text-white no-underline
+                                transition duration-200
+                                hover:bg-[#f87171]
+                                active:scale-[0.97]
+                                <%= currentPage === 'payment-history'
+                                    ? 'bg-[#dc2626] shadow-[inset_0_-2px_0_rgba(255,255,255,0.15),0_2px_5px_rgba(0,0,0,0.08)]'
+                                    : '' %>
+                            "
+                        >
+
+                            Payments
+
+                        </a>
+
+                        <!-- HOST -->
+                        <a
+                            href="/host/host-home-list"
+                            class="
+                                inline-flex items-center justify-center
+                                gap-[7px]
+                                whitespace-nowrap
+                                rounded-lg
+                                px-[14px] py-[9px]
+                                text-sm font-medium
+                                text-white no-underline
+                                transition duration-200
+                                hover:bg-[#f87171]
+                                active:scale-[0.97]
+                                <%= currentPage === 'host-homes'
+                                    ? 'bg-[#dc2626] shadow-[inset_0_-2px_0_rgba(255,255,255,0.15),0_2px_5px_rgba(0,0,0,0.08)]'
+                                    : '' %>
+                            "
+                        >
+                            <span>Host</span>
+                        </a>
+
+
+                        <!-- ADD HOME -->
+                        <a
+                            href="/host/add-home"
+                            class="
+                                inline-flex items-center justify-center
+                                gap-[7px]
+                                whitespace-nowrap
+                                rounded-lg
+                                px-[14px] py-[9px]
+                                text-sm font-medium
+                                text-white no-underline
+                                transition duration-200
+                                hover:bg-[#f87171]
+                                active:scale-[0.97]
+                                <%= currentPage === 'addHome'
+                                    ? 'bg-[#dc2626] shadow-[inset_0_-2px_0_rgba(255,255,255,0.15),0_2px_5px_rgba(0,0,0,0.08)]'
+                                    : '' %>
+                            "
+                        >
+                            <span>Add Home</span>
+                        </a>
+
+                        <!-- Host Dashboard -->
+                        <a
+                            href="/host/dashboard"
+                            class="
+                                inline-flex items-center justify-center
+                                gap-[7px]
+                                whitespace-nowrap
+                                rounded-lg
+                                px-[14px] py-[9px]
+                                text-sm font-medium
+                                text-white no-underline
+                                transition duration-200
+                                hover:bg-[#f87171]
+                                active:scale-[0.97]
+                                <%= currentPage === 'dashboard'
+                                    ? 'bg-[#dc2626] shadow-[inset_0_-2px_0_rgba(255,255,255,0.15),0_2px_5px_rgba(0,0,0,0.08)]'
+                                    : '' %>
+                            ">
+
+                             Host Dashboard
+
+                        </a>
+
+                    <% } %>
+
+                </div>
+
+            <% } %>
+
+            <!-- Admin Dashboard -->
+
+<% if (user && user.userType === "admin") { %>
+
+    <a href="/admin/dashboard"
+       class="<%= currentPage === 'admin-dashboard'
+           ? 'bg-red-600'
+           : 'hover:bg-red-400' %>
+           px-4 py-2 rounded-lg
+           text-sm font-medium
+           transition duration-200">
+
+        Admin Dashboard
+
+    </a>
+
+<% } %>
+
+        </div>
+
+
+        <!-- ================= RIGHT SIDE ================= -->
+
+        <div
+            class="
+                hidden
+                shrink-0
+                items-center
+                gap-2
+                md:flex
+            "
+        >
+
+            <% if (!isLoggedIn) { %>
+
+                <!-- SIGN UP -->
+                <a
+                    href="/signup"
+                    class="
+                        inline-flex items-center justify-center
+                        whitespace-nowrap
+                        rounded-lg
+                        px-[18px] py-[9px]
+                        text-sm font-semibold
+                        text-white no-underline
+                        transition duration-200
+                        hover:bg-[#f87171]
+                        active:scale-[0.97]
+                        <%= currentPage === 'signup'
+                            ? 'bg-white !text-[#ef4444] shadow-[0_2px_6px_rgba(0,0,0,0.15)]'
+                            : '' %>
+                    "
+                >
+                    Sign Up
+                </a>
+
+
+                <!-- LOGIN -->
+                <a
+                    href="/login"
+                    class="
+                        inline-flex items-center justify-center
+                        whitespace-nowrap
+                        rounded-lg
+                        px-[18px] py-[9px]
+                        text-sm font-semibold
+                        text-white no-underline
+                        transition duration-200
+                        hover:bg-[#f87171]
+                        active:scale-[0.97]
+                        <%= currentPage === 'login'
+                            ? 'bg-white !text-[#ef4444] shadow-[0_2px_6px_rgba(0,0,0,0.15)]'
+                            : '' %>
+                    "
+                >
+                    Login
+                </a>
+
+
+            <% } else { %>
+
+                <!-- LOGOUT -->
+                <form action="/logout" method="POST">
+
+                    <button
+                        type="submit"
+                        class="
+                            inline-flex items-center justify-center
+                            cursor-pointer
+                            whitespace-nowrap
+                            rounded-lg
+                            border-0
+                            bg-white
+                            px-[18px] py-[9px]
+                            text-sm font-semibold
+                            text-[#ef4444]
+                            shadow-[0_2px_5px_rgba(0,0,0,0.08)]
+                            transition duration-200
+                            hover:bg-[#f3f4f6]
+                            active:scale-[0.96]
+                        "
+                    >
+                        Logout
+                    </button>
+                    
+                    <a 
+    href="/profile"
+    class="inline-flex items-center justify-center gap-2
+           h-10 min-w-10 px-4
+           rounded-full
+           bg-white border border-gray-200
+           text-gray-700 font-medium text-sm
+           shadow-sm
+           hover:bg-gray-900 hover:text-white
+           hover:border-gray-900 hover:shadow-md
+           active:scale-95
+           transition-all duration-200">
+
+    <span class="text-base">👤</span>
+    <span class="hidden sm:inline">Profile</span>
+
+</a>
+
+                </form>
+
+            <% } %>
+
+        </div>
+
+
+        <!-- ================= MOBILE LOGOUT ================= -->
+
+        <% if (isLoggedIn) { %>
+
+            <div class="block md:hidden">
+
+                <form action="/logout" method="POST">
+
+                    <button
+                        type="submit"
+                        class="
+                            inline-flex items-center justify-center
+                            cursor-pointer
+                            whitespace-nowrap
+                            rounded-lg
+                            border-0
+                            bg-white
+                            px-[18px] py-[9px]
+                            text-sm font-semibold
+                            text-[#ef4444]
+                            shadow-[0_2px_5px_rgba(0,0,0,0.08)]
+                            transition duration-200
+                            hover:bg-[#f3f4f6]
+                            active:scale-[0.96]
+                        "
+                    >
+                        Logout
+                    </button>
+
+                </form>
+
+            </div>
+
+        <% } %>
+
+    </nav>
+
+
+    <!-- ================= MOBILE MENU ================= -->
+
+    <div
+        id="mobileMenu"
+        class="
+            hidden
+            overflow-hidden
+            rounded-xl
+            border border-gray-200
+            bg-white
+            p-2
+            text-gray-700
+            shadow-[0_8px_25px_rgba(0,0,0,0.18)]
+            mx-[15px] mb-3
+            md:hidden
+        "
+    >
+
+        <!-- HOME -->
+        <a
+            href="/"
+            class="
+                flex items-center gap-2.5
+                rounded-lg
+                px-[15px] py-3
+                text-sm font-medium
+                text-gray-700 no-underline
+                transition duration-200
+                hover:bg-red-50 hover:text-red-500
+                <%= currentPage === 'index'
+                    ? 'bg-red-50 text-red-600 font-semibold'
+                    : '' %>
+            "
+        >
+            🏠
+            <span>Home</span>
+        </a>
+
+
+        <% if (!isLoggedIn) { %>
+
+            <!-- LOGIN -->
+            <a
+                href="/login"
+                class="
+                    flex items-center gap-2.5
+                    rounded-lg
+                    px-[15px] py-3
+                    text-sm font-medium
+                    text-gray-700 no-underline
+                    transition duration-200
+                    hover:bg-red-50 hover:text-red-500
+                    <%= currentPage === 'login'
+                        ? 'bg-red-50 text-red-600 font-semibold'
+                        : '' %>
+                "
+            >
+                🔐
+                <span>Login</span>
+            </a>
+
+
+            <!-- SIGN UP -->
+            <a
+                href="/signup"
+                class="
+                    flex items-center gap-2.5
+                    rounded-lg
+                    px-[15px] py-3
+                    text-sm font-medium
+                    text-gray-700 no-underline
+                    transition duration-200
+                    hover:bg-red-50 hover:text-red-500
+                    <%= currentPage === 'signup'
+                        ? 'bg-red-50 text-red-600 font-semibold'
+                        : '' %>
+                "
+            >
+                ✨
+                <span>Sign Up</span>
+            </a>
+
+
+        <% } else { %>
+
+            <a
+    href="/profile"
+    class="block px-4 py-2 text-gray-700
+           hover:bg-red-50 hover:text-red-500 rounded-lg">
+    👤 Profile
+</a>
+
+
+            <% if (user && user.userType === "guest") { %>
+
+                <!-- LIST -->
+                <a
+                    href="/homes"
+                    class="
+                        flex items-center gap-2.5
+                        rounded-lg
+                        px-[15px] py-3
+                        text-sm font-medium
+                        text-gray-700 no-underline
+                        transition duration-200
+                        hover:bg-red-50 hover:text-red-500
+                        <%= currentPage === 'Home'
+                            ? 'bg-red-50 text-red-600 font-semibold'
+                            : '' %>
+                    "
+                >
+                    🏠
+                    <span>List</span>
+                </a>
+
+
+                <!-- FAVOURITES -->
+                <a
+                    href="/favourites"
+                    class="
+                        flex items-center gap-2.5
+                        rounded-lg
+                        px-[15px] py-3
+                        text-sm font-medium
+                        text-gray-700 no-underline
+                        transition duration-200
+                        hover:bg-red-50 hover:text-red-500
+                        <%= currentPage === 'favourites'
+                            ? 'bg-red-50 text-red-600 font-semibold'
+                            : '' %>
+                    "
+                >
+                    ❤️
+                    <span>Favourites</span>
+                </a>
+
+
+                <!-- BOOKINGS -->
+                <a
+                    href="/bookings"
+                    class="
+                        flex items-center gap-2.5
+                        rounded-lg
+                        px-[15px] py-3
+                        text-sm font-medium
+                        text-gray-700 no-underline
+                        transition duration-200
+                        hover:bg-red-50 hover:text-red-500
+                        <%= currentPage === 'bookings'
+                            ? 'bg-red-50 text-red-600 font-semibold'
+                            : '' %>
+                    "
+                >
+                    📅
+                    <span>Bookings</span>
+                </a>
+
+                <!-- Payment History -->
+                        <a
+                        href="/payment/history"
+                        class="
+                        flex items-center gap-2.5
+                        rounded-lg
+                        px-[15px] py-3
+                        text-sm font-medium
+                        text-gray-700 no-underline
+                        transition duration-200
+                        hover:bg-red-50 hover:text-red-500
+                        <%= currentPage === 'payment-history'
+                            ? 'bg-red-50 text-red-600 font-semibold'
+                            : '' %>
+                    ">
+
+                        💳 Payments
+
+                        </a>
+
+
+            <% } else if (user && user.userType === "host") { %>
+
+                <!-- LIST -->
+                <a
+                    href="/homes"
+                    class="
+                        flex items-center gap-2.5
+                        rounded-lg
+                        px-[15px] py-3
+                        text-sm font-medium
+                        text-gray-700 no-underline
+                        transition duration-200
+                        hover:bg-red-50 hover:text-red-500
+                        <%= currentPage === 'Home'
+                            ? 'bg-red-50 text-red-600 font-semibold'
+                            : '' %>
+                    "
+                >
+                    🏠
+                    <span>List</span>
+                </a>
+
+
+                <!-- FAVOURITES -->
+                <a
+                    href="/favourites"
+                    class="
+                        flex items-center gap-2.5
+                        rounded-lg
+                        px-[15px] py-3
+                        text-sm font-medium
+                        text-gray-700 no-underline
+                        transition duration-200
+                        hover:bg-red-50 hover:text-red-500
+                        <%= currentPage === 'favourites'
+                            ? 'bg-red-50 text-red-600 font-semibold'
+                            : '' %>
+                    "
+                >
+                    ❤️
+                    <span>Favourites</span>
+                </a>
+
+
+                <!-- BOOKINGS -->
+                <a
+                    href="/bookings"
+                    class="
+                        flex items-center gap-2.5
+                        rounded-lg
+                        px-[15px] py-3
+                        text-sm font-medium
+                        text-gray-700 no-underline
+                        transition duration-200
+                        hover:bg-red-50 hover:text-red-500
+                        <%= currentPage === 'bookings'
+                            ? 'bg-red-50 text-red-600 font-semibold'
+                            : '' %>
+                    "
+                >
+                    📅
+                    <span>Bookings</span>
+                </a>
+
+                <!-- Payment History -->
+                        <a
+                        href="/payment/history"
+                        class="
+                        flex items-center gap-2.5
+                        rounded-lg
+                        px-[15px] py-3
+                        text-sm font-medium
+                        text-gray-700 no-underline
+                        transition duration-200
+                        hover:bg-red-50 hover:text-red-500
+                        <%= currentPage === 'payment-history'
+                            ? 'bg-red-50 text-red-600 font-semibold'
+                            : '' %>
+                    ">
+
+                        💳 Payments
+
+                        </a>
+
+                <!-- HOST -->
+                <a
+                    href="/host/host-home-list"
+                    class="
+                        flex items-center gap-2.5
+                        rounded-lg
+                        px-[15px] py-3
+                        text-sm font-medium
+                        text-gray-700 no-underline
+                        transition duration-200
+                        hover:bg-red-50 hover:text-red-500
+                        <%= currentPage === 'host-homes'
+                            ? 'bg-red-50 text-red-600 font-semibold'
+                            : '' %>
+                    "
+                >
+                    🏠
+                    <span>Host</span>
+                </a>
+
+
+                <!-- ADD HOME -->
+                <a
+                    href="/host/add-home"
+                    class="
+                        flex items-center gap-2.5
+                        rounded-lg
+                        px-[15px] py-3
+                        text-sm font-medium
+                        text-gray-700 no-underline
+                        transition duration-200
+                        hover:bg-red-50 hover:text-red-500
+                        <%= currentPage === 'addHome'
+                            ? 'bg-red-50 text-red-600 font-semibold'
+                            : '' %>
+                    "
+                >
+                    ➕
+                    <span>Add Home</span>
+                </a>
+
+            <% } %>
+
+
+
+        <% if (user && user.userType === "admin") { %>
+
+    <!-- ADMIN DASHBOARD -->
+
+    <a
+        href="/admin/dashboard"
+        class="
+            flex items-center gap-2.5
+            rounded-lg
+            px-[15px] py-3
+            text-sm font-medium
+            text-gray-700 no-underline
+            transition duration-200
+            hover:bg-red-50 hover:text-red-500
+            <%= currentPage === 'admin-dashboard'
+                ? 'bg-red-50 text-red-600 font-semibold'
+                : '' %>
+        "
+    >
+        🛡️
+        <span>Admin Dashboard</span>
+    </a>
+        <% } %>
+<% } %>
+
+    </div>
+
+</header>
+
+
+<!-- ================= MOBILE MENU SCRIPT ================= -->
+
+<script>
+
+function toggleMobileMenu() {
+
+    const menu = document.getElementById("mobileMenu");
+
+    menu.classList.toggle("hidden");
+
+}
+
+</script>

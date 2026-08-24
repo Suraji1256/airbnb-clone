@@ -1,0 +1,170 @@
+<%- include("../partials/head") %>
+<%- include("../partials/header") %>
+
+<main class="max-w-7xl mx-auto px-4 py-8">
+
+    <!-- Header -->
+
+    <div class="mb-8">
+
+        <h1 class="text-3xl md:text-4xl font-bold text-gray-800">
+            Admin Dashboard
+        </h1>
+
+        <p class="text-gray-500 mt-2">
+            Manage your Airbnb platform.
+        </p>
+
+    </div>
+
+
+    <!-- Statistics -->
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+
+        <!-- Users -->
+
+        <div class="bg-white rounded-2xl shadow-md p-6">
+
+            <p class="text-gray-500">
+                Total Users
+            </p>
+
+            <h2 class="text-3xl font-bold mt-2">
+                <%= totalUsers %>
+            </h2>
+
+            <p class="text-sm text-gray-400 mt-2">
+                Registered users
+            </p>
+
+        </div>
+
+
+        <!-- Properties -->
+
+        <div class="bg-white rounded-2xl shadow-md p-6">
+
+            <p class="text-gray-500">
+                Properties
+            </p>
+
+            <h2 class="text-3xl font-bold mt-2">
+                <%= totalHomes %>
+            </h2>
+
+            <p class="text-sm text-gray-400 mt-2">
+                Listed properties
+            </p>
+
+        </div>
+
+
+        <!-- Bookings -->
+
+        <div class="bg-white rounded-2xl shadow-md p-6">
+
+            <p class="text-gray-500">
+                Total Bookings
+            </p>
+
+            <h2 class="text-3xl font-bold mt-2">
+                <%= totalBookings %>
+            </h2>
+
+            <p class="text-sm text-gray-400 mt-2">
+                All bookings
+            </p>
+
+        </div>
+
+
+        <!-- Revenue -->
+
+        <div class="bg-white rounded-2xl shadow-md p-6">
+
+            <p class="text-gray-500">
+                Revenue
+            </p>
+
+            <h2 class="text-3xl font-bold mt-2">
+                ₹<%= totalRevenue.toLocaleString("en-IN") %>
+            </h2>
+
+            <p class="text-sm text-gray-400 mt-2">
+                Confirmed bookings
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- Management -->
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-10">
+
+
+        <a
+            href="/admin/users"
+            class="bg-white rounded-2xl shadow-md p-6
+                   hover:shadow-xl transition">
+
+            <div class="text-3xl mb-3">
+                👥
+            </div>
+
+            <h2 class="text-xl font-bold">
+                Manage Users
+            </h2>
+
+            <p class="text-gray-500 mt-2">
+                View and manage registered users.
+            </p>
+
+        </a>
+
+
+        <a
+            href="/admin/homes"
+            class="bg-white rounded-2xl shadow-md p-6
+                   hover:shadow-xl transition">
+
+            <div class="text-3xl mb-3">
+                🏠
+            </div>
+
+            <h2 class="text-xl font-bold">
+                Manage Properties
+            </h2>
+
+            <p class="text-gray-500 mt-2">
+                Review and manage property listings.
+            </p>
+
+        </a>
+
+
+        <a
+            href="/admin/bookings"
+            class="bg-white rounded-2xl shadow-md p-6
+                   hover:shadow-xl transition">
+
+            <div class="text-3xl mb-3">
+                📅
+            </div>
+
+            <h2 class="text-xl font-bold">
+                Manage Bookings
+            </h2>
+
+            <p class="text-gray-500 mt-2">
+                Monitor all platform bookings.
+            </p>
+
+        </a>
+
+    </div>
+
+</main>

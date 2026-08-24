@@ -1,0 +1,364 @@
+<%- include("../partials/head") %>
+<%- include("../partials/header") %>
+<%- include("../partials/flash") %>
+
+<main class="min-h-screen bg-gray-50 px-4 py-10 sm:py-14">
+
+    <div class="w-full max-w-5xl mx-auto">
+
+        <!-- Page Heading -->
+        <div class="mb-7 text-center sm:text-left">
+
+            <p class="text-sm font-semibold text-red-500 mb-2">
+                RESERVE YOUR STAY
+            </p>
+
+            <h1 class="text-3xl sm:text-4xl font-bold text-gray-900">
+                Book <span class="text-red-500"><%= home.houseName %></span>
+            </h1>
+
+            <p class="text-gray-500 mt-2 text-sm sm:text-base">
+                Select your dates and number of guests.
+            </p>
+
+        </div>
+
+
+        <!-- Booking Container -->
+        <div class="bg-white rounded-3xl border border-gray-200
+                    shadow-[0_10px_40px_rgba(0,0,0,0.08)]
+                    p-3 sm:p-4">
+
+            <form action="/booking" method="POST">
+
+                <input
+                    type="hidden"
+                    name="homeId"
+                    value="<%= home._id %>"
+                >
+
+
+                <!-- Responsive Booking Bar -->
+                <div class="grid grid-cols-1
+                            md:grid-cols-2
+                            xl:grid-cols-4
+                            divide-y
+                            md:divide-y-0
+                            md:divide-x
+                            divide-gray-200
+                            rounded-2xl
+                            border border-gray-200
+                            overflow-hidden">
+
+
+                    <!-- Check In -->
+                    <label
+                        class="group relative
+                               p-5 sm:p-6
+                               cursor-pointer
+                               bg-white
+                               hover:bg-gray-50
+                               transition-all duration-200">
+
+                        <span class="block text-xs
+                                     font-bold uppercase
+                                     tracking-wider
+                                     text-gray-500
+                                     group-hover:text-red-500
+                                     transition">
+
+                            Check-in
+
+                        </span>
+
+                        <div class="flex items-center
+                                    justify-between gap-3 mt-2">
+
+                            <input
+                                type="date"
+                                name="checkIn"
+                                required
+                                class="w-full min-w-0
+                                       bg-transparent
+                                       border-0
+                                       p-0
+                                       text-gray-900
+                                       font-semibold
+                                       outline-none
+                                       cursor-pointer
+                                       focus:ring-0"
+                            >
+
+                            <span class="flex-shrink-0
+                                         w-9 h-9
+                                         rounded-full
+                                         bg-gray-100
+                                         flex items-center
+                                         justify-center
+                                         group-hover:bg-red-100
+                                         transition">
+
+                                📅
+
+                            </span>
+
+                        </div>
+
+                    </label>
+
+
+                    <!-- Check Out -->
+                    <label
+                        class="group relative
+                               p-5 sm:p-6
+                               cursor-pointer
+                               bg-white
+                               hover:bg-gray-50
+                               transition-all duration-200">
+
+                        <span class="block text-xs
+                                     font-bold uppercase
+                                     tracking-wider
+                                     text-gray-500
+                                     group-hover:text-red-500
+                                     transition">
+
+                            Check-out
+
+                        </span>
+
+                        <div class="flex items-center
+                                    justify-between gap-3 mt-2">
+
+                            <input
+                                type="date"
+                                name="checkOut"
+                                required
+                                class="w-full min-w-0
+                                       bg-transparent
+                                       border-0
+                                       p-0
+                                       text-gray-900
+                                       font-semibold
+                                       outline-none
+                                       cursor-pointer
+                                       focus:ring-0"
+                            >
+
+                            <span class="flex-shrink-0
+                                         w-9 h-9
+                                         rounded-full
+                                         bg-gray-100
+                                         flex items-center
+                                         justify-center
+                                         group-hover:bg-red-100
+                                         transition">
+
+                                📅
+
+                            </span>
+
+                        </div>
+
+                    </label>
+
+
+                    <!-- Guests -->
+                    <label
+                        class="group
+                               p-5 sm:p-6
+                               bg-white
+                               hover:bg-gray-50
+                               transition-all duration-200">
+
+                        <span class="block text-xs
+                                     font-bold uppercase
+                                     tracking-wider
+                                     text-gray-500
+                                     group-focus-within:text-red-500
+                                     transition">
+
+                            Guests
+
+                        </span>
+
+                        <div class="flex items-center
+                                    gap-3 mt-2">
+
+                            <span class="flex-shrink-0
+                                         w-9 h-9
+                                         rounded-full
+                                         bg-gray-100
+                                         flex items-center
+                                         justify-center">
+
+                                👥
+
+                            </span>
+
+                            <input
+                                type="number"
+                                name="guests"
+                                value="1"
+                                min="1"
+                                required
+                                class="w-full
+                                       bg-transparent
+                                       border-0
+                                       p-0
+                                       text-gray-900
+                                       font-semibold
+                                       outline-none
+                                       focus:ring-0"
+                            >
+
+                        </div>
+
+                    </label>
+
+
+                    <!-- Button -->
+                    <div class="p-4
+                                flex items-center
+                                bg-white">
+
+                        <button
+                            type="submit"
+                            class="group w-full
+                                   min-h-[60px]
+                                   rounded-2xl
+                                   bg-red-500
+                                   hover:bg-red-600
+                                   text-white
+                                   font-bold
+                                   px-5
+                                   cursor-pointer
+                                   transition-all duration-200
+                                   hover:shadow-lg
+                                   hover:shadow-red-200
+                                   active:scale-[0.98]">
+
+                            <span class="flex items-center
+                                         justify-center gap-2">
+
+                                <span>
+                                    Reserve
+                                </span>
+
+                                <span class="text-lg
+                                             transition-transform
+                                             group-hover:translate-x-1">
+
+                                    →
+
+                                </span>
+
+                            </span>
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Bottom Information -->
+                <div class="flex flex-col sm:flex-row
+                            items-center justify-between
+                            gap-3
+                            px-3 sm:px-5
+                            pt-4">
+
+                    <div class="flex items-center gap-2
+                                text-xs text-gray-500">
+
+                        <span class="w-7 h-7
+                                     rounded-full
+                                     bg-green-50
+                                     flex items-center
+                                     justify-center">
+
+                            ✓
+
+                        </span>
+
+                        <span>
+                            Secure reservation
+                        </span>
+
+                    </div>
+
+
+                    <div class="text-xs text-gray-400">
+                        Free cancellation may apply
+                    </div>
+
+                </div>
+
+            </form>
+
+        </div>
+
+
+        <!-- Property Info -->
+        <div class="grid grid-cols-1 sm:grid-cols-3
+                    gap-3 mt-5">
+
+            <div class="bg-white rounded-2xl
+                        border border-gray-100
+                        p-4
+                        hover:-translate-y-1
+                        transition duration-200">
+
+                <p class="text-xs text-gray-400">
+                    Property
+                </p>
+
+                <p class="font-semibold text-gray-900 mt-1 truncate">
+                    <%= home.houseName %>
+                </p>
+
+            </div>
+
+
+            <div class="bg-white rounded-2xl
+                        border border-gray-100
+                        p-4
+                        hover:-translate-y-1
+                        transition duration-200">
+
+                <p class="text-xs text-gray-400">
+                    Location
+                </p>
+
+                <p class="font-semibold text-gray-900 mt-1 truncate">
+                    <%= home.location %>
+                </p>
+
+            </div>
+
+
+            <div class="bg-white rounded-2xl
+                        border border-gray-100
+                        p-4
+                        hover:-translate-y-1
+                        transition duration-200">
+
+                <p class="text-xs text-gray-400">
+                    Price
+                </p>
+
+                <p class="font-semibold text-gray-900 mt-1">
+                    ₹<%= home.price %>
+                    <span class="text-xs text-gray-400 font-normal">
+                        / night
+                    </span>
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</main>

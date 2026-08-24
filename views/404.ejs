@@ -1,0 +1,53 @@
+<%- include('partials/head') %>
+
+<body class="bg-gradient-to-br from-red-50 to-pink-100 min-h-screen flex flex-col">
+
+    <!-- Header -->
+    <%- include('partials/header') %>
+
+    <!-- Main Content -->
+    <main class="flex-1 flex items-center justify-center px-4">
+
+        <div class="bg-white shadow-2xl rounded-2xl p-10 max-w-lg w-full text-center">
+
+            <!-- Error Number -->
+            <h1 class="text-8xl font-extrabold text-red-500">
+                404
+            </h1>
+
+            <!-- Heading -->
+            <h2 class="text-3xl font-bold text-gray-800 mt-4">
+                Oops! Page Not Found
+            </h2>
+
+            <!-- Description -->
+            <p class="text-gray-600 mt-4 leading-relaxed">
+                Sorry, the page you are looking for doesn't exist or has been moved.
+            </p>
+
+            <!-- Buttons -->
+            <div class="mt-8 flex flex-col sm:flex-row justify-center gap-4">
+
+                <a href="/"
+                    class="bg-red-500 hover:bg-red-600 text-white px-6 py-3 rounded-lg font-semibold transition duration-300">
+                    🏠 Back to Home
+                </a>
+
+                <button onclick="history.back()"
+                    class="border-2 border-red-500 text-red-500 hover:bg-red-500 hover:text-white px-6 py-3 rounded-lg font-semibold transition duration-300">
+                    ← Go Back
+                </button>
+
+            </div>
+
+            <!-- Footer Text -->
+            <p class="mt-8 text-gray-400 text-sm">
+                Error Code: 404 • Page Not Found
+            </p>
+
+        </div>
+
+    </main>
+
+</body>
+</html>

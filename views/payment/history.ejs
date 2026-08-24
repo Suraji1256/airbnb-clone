@@ -1,0 +1,225 @@
+<%- include("../partials/head") %>
+<%- include("../partials/header") %>
+<%- include("../partials/flash") %>
+
+<main class="max-w-6xl mx-auto px-4 py-8">
+
+    <!-- Header -->
+
+    <div class="mb-8">
+
+        <h1 class="text-3xl md:text-4xl font-bold text-gray-800">
+            Payment History
+        </h1>
+
+        <p class="text-gray-500 mt-2">
+            View your completed booking payments and receipts.
+        </p>
+
+    </div>
+
+
+    <% if (payments.length === 0) { %>
+
+        <div class="bg-white rounded-2xl shadow-md
+                    p-10 text-center">
+
+            <div class="text-5xl mb-4">
+                💳
+            </div>
+
+            <h2 class="text-2xl font-semibold">
+                No Payments Yet
+            </h2>
+
+            <p class="text-gray-500 mt-2">
+                Your successful payments will appear here.
+            </p>
+
+            <a
+                href="/homes"
+                class="inline-block mt-6
+                       bg-red-500 hover:bg-red-600
+                       text-white px-6 py-3
+                       rounded-lg">
+
+                Explore Homes
+
+            </a>
+
+        </div>
+
+    <% } else { %>
+
+
+        <div class="space-y-5">
+
+            <% payments.forEach(payment => { %>
+
+                <div class="bg-white rounded-2xl
+                            shadow-md border
+                            border-gray-100 p-6">
+
+                    <div class="flex flex-col
+                                md:flex-row
+                                md:items-center
+                                md:justify-between
+                                gap-5">
+
+
+                        <!-- Property -->
+
+                        <div class="flex gap-4">
+
+                            <% if (payment.home?.photo) { %>
+
+                                <img
+                                    src="<%= payment.home.photo %>"
+                                    alt="<%= payment.home.houseName %>"
+                                    class="w-24 h-20
+                                           object-cover
+                                           rounded-xl">
+
+                            <% } %>
+
+
+                            <div>
+
+                                <h2 class="text-xl font-bold">
+
+                                    <%= payment.home?.houseName ||
+                                        "Property" %>
+
+                                </h2>
+
+                                <p class="text-gray-500 mt-1">
+
+                                    📍
+                                    <%= payment.home?.location ||
+                                        "Unknown" %>
+
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Payment -->
+
+                        <div class="text-left md:text-right">
+
+                            <p class="text-2xl font-bold">
+
+                                ₹<%= payment.totalPrice
+                                    .toLocaleString("en-IN") %>
+
+                            </p>
+
+                            <span
+                                class="inline-block mt-2
+                                       bg-green-100
+                                       text-green-700
+                                       px-3 py-1
+                                       rounded-full text-sm">
+
+                                ✓ Paid
+
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Payment Info -->
+
+                    <div class="border-t mt-5 pt-5">
+
+                        <div class="grid grid-cols-1
+                                    md:grid-cols-3 gap-4">
+
+                            <div>
+
+                                <p class="text-sm text-gray-500">
+                                    Payment Date
+                                </p>
+
+                                <p class="font-medium mt-1">
+
+                                    <%= payment.paidAt
+                                        ? payment.paidAt.toLocaleString("en-IN")
+                                        : "N/A" %>
+
+                                </p>
+
+                            </div>
+
+
+                            <div>
+
+                                <p class="text-sm text-gray-500">
+                                    Payment ID
+                                </p>
+
+                                <p class="font-medium mt-1
+                                          break-all">
+
+                                    <%= payment.razorpayPaymentId ||
+                                        "N/A" %>
+
+                                </p>
+
+                            </div>
+
+
+                            <div>
+
+                                <p class="text-sm text-gray-500">
+                                    Order ID
+                                </p>
+
+                                <p class="font-medium mt-1
+                                          break-all">
+
+                                    <%= payment.razorpayOrderId ||
+                                        "N/A" %>
+
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Receipt -->
+
+                        <div class="mt-5">
+
+                            <a
+                                href="/payment/receipt/<%= payment._id %>"
+                                class="inline-flex
+                                       items-center gap-2
+                                       bg-gray-900
+                                       hover:bg-gray-700
+                                       text-white
+                                       px-5 py-2
+                                       rounded-lg">
+
+                                🧾 View Receipt
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            <% }) %>
+
+        </div>
+
+    <% } %>
+
+</main>

@@ -1,0 +1,90 @@
+                <% if (errors.length > 0) { %>
+
+                    <div
+                        class="mb-5
+                               rounded-xl
+                               border border-red-200
+                               bg-red-50
+                               p-4">
+
+                        <div class="flex items-start gap-3">
+
+                            <!-- Error Icon -->
+                            <div class="flex-shrink-0 mt-0.5">
+
+                                <div
+                                    class="w-7 h-7
+                                           rounded-full
+                                           bg-red-100
+                                           flex items-center justify-center">
+
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        class="w-4 h-4 text-red-600"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke="currentColor">
+
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M12 9v3.5m0 3h.01
+                                               M10.3 4.5L2.9 17
+                                               a2 2 0 001.7 3h14.8
+                                               a2 2 0 001.7-3L13.7 4.5
+                                               a2 2 0 00-3.4 0z" />
+
+                                    </svg>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- Error Content -->
+                            <div class="flex-1 min-w-0">
+
+                                <h3
+                                    class="text-sm
+                                           font-semibold
+                                           text-red-800">
+
+                                    Please fix the following errors
+
+                                </h3>
+
+
+                                <ul class="mt-2 space-y-1.5">
+
+                                    <% errors.forEach(function(error) { %>
+
+                                        <li
+                                            class="flex items-start gap-2
+                                                   text-xs text-red-700">
+
+                                            <span
+                                                class="mt-1
+                                                       w-1.5 h-1.5
+                                                       rounded-full
+                                                       bg-red-500
+                                                       flex-shrink-0">
+                                            </span>
+
+                                            <span>
+                                                <%= error %>
+                                            </span>
+
+                                        </li>
+
+                                    <% }); %>
+
+                                </ul>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                <% } %>

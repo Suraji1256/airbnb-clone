@@ -1,0 +1,1057 @@
+<%- include('../partials/head') %>
+</head>
+
+<body class="bg-white text-gray-900">
+
+    <%- include('../partials/header') %>
+    <%- include("../partials/flash") %>
+
+    <!-- ================= MAIN ================= -->
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+        <p class="text-gray-600 mt-2 mb-2">
+    👤 Hosted by
+    <strong>
+        <%= home.owner.firstName %>
+        <%= home.owner.lastName || "" %>
+    </strong>
+</p>
+
+
+
+
+        <!-- ================= IMAGE ================= -->
+
+        <div class="relative overflow-hidden rounded-2xl bg-gray-100">
+
+            <img
+                src="<%= home.photo %>"
+                alt="<%= home.name %>"
+                class="w-full h-[280px] sm:h-[400px] md:h-[500px] object-cover">
+
+        </div>
+
+
+        <!-- ================= CONTENT ================= -->
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-10 mt-10">
+
+
+            <!-- ================= LEFT CONTENT ================= -->
+
+            <div class="lg:col-span-2">
+
+                <!-- HOST / HOME INFO -->
+
+<div class="pb-8 border-b border-gray-200">
+
+    <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-6">
+
+        <!-- LEFT: Property Information -->
+        <div class="flex items-start gap-4">
+
+            <!-- Property Icon -->
+            <div
+                class="flex-shrink-0
+                       w-14 h-14
+                       rounded-2xl
+                       bg-rose-50
+                       border border-rose-100
+                       flex items-center justify-center">
+
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.7"
+                    stroke="currentColor"
+                    class="w-7 h-7 text-rose-500">
+
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="m2.25 12 9.04-9.04a1 1 0 0 1 1.42 0L21.75 12
+                           M4.5 9.75V19.5a1.5 1.5 0 0 0 1.5 1.5h12
+                           a1.5 1.5 0 0 0 1.5-1.5V9.75
+                           M9 21v-6.75h6V21" />
+
+                </svg>
+
+            </div>
+
+
+            <!-- Property Text -->
+            <div class="min-w-0">
+
+                <!-- Title -->
+                <h1
+    class="text-2xl sm:text-3xl
+           font-semibold
+           tracking-tight
+           text-gray-900">
+
+    Stay at
+    <span class="font-bold text-rose-600">
+        <%= home.houseName %>
+    </span>
+
+</h1>
+
+
+                <!-- Rating + Reviews -->
+                <div class="flex flex-wrap items-center gap-2 mt-3">
+
+                    <% if(home.reviewCount > 0){ %>
+
+                        <div class="flex items-center gap-1.5">
+
+                            <!-- Star -->
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 24 24"
+                                fill="currentColor"
+                                class="w-5 h-5 text-yellow-400">
+
+                                <path
+                                    fill-rule="evenodd"
+                                    d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l1.373 3.3
+                                       3.56.286c1.164.093 1.636 1.545.749 2.292l-2.713 2.283
+                                       .829 3.401c.27 1.11-.905 1.99-1.903 1.395L12 14.347
+                                       l-3.107 1.82c-.998.595-2.173-.285-1.903-1.395l.829-3.4
+                                       L5.106 9.087c-.887-.747-.415-2.199.749-2.292l3.56-.286
+                                       1.373-3.3Z"
+                                    clip-rule="evenodd" />
+
+                            </svg>
+
+                            <span class="font-semibold text-gray-900">
+                                <%= Number(home.averageRating).toFixed(1) %>
+                            </span>
+
+                        </div>
+
+
+                        <span class="text-gray-300">
+                            •
+                        </span>
+
+
+                        <span
+                            class="text-sm
+                                   font-medium
+                                   text-gray-600
+                                   underline
+                                   underline-offset-2">
+
+                            <%= home.reviewCount %>
+                            <%= home.reviewCount === 1 ? "review" : "reviews" %>
+
+                        </span>
+
+                    <% } else { %>
+
+                        <span
+                            class="inline-flex
+                                   items-center
+                                   rounded-full
+                                   bg-gray-100
+                                   px-3
+                                   py-1
+                                   text-sm
+                                   font-medium
+                                   text-gray-600">
+
+                            New listing
+
+                        </span>
+
+                        <span class="text-gray-400">
+                            •
+                        </span>
+
+                        <span class="text-sm text-gray-500">
+                            No reviews yet
+                        </span>
+
+                    <% } %>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- RIGHT: Property Type -->
+        <div class="sm:flex-shrink-0">
+
+            <div
+                class="inline-flex
+                       items-center
+                       gap-2
+                       rounded-full
+                       border
+                       border-gray-200
+                       bg-gray-50
+                       px-4
+                       py-2.5
+                       text-sm
+                       font-medium
+                       text-gray-700">
+
+                <!-- Building Icon -->
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.8"
+                    stroke="currentColor"
+                    class="w-5 h-5 text-gray-500">
+
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M3.75 21h16.5M5.25 21V5.25
+                           a1.5 1.5 0 0 1 1.5-1.5h10.5
+                           a1.5 1.5 0 0 1 1.5 1.5V21
+                           M9 7.5h1.5M9 11h1.5M9 14.5h1.5
+                           M13.5 7.5H15M13.5 11H15M13.5 14.5H15" />
+
+                </svg>
+
+                <span>
+                    <%= home.propertyType || "Property" %>
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+                <!-- ================= DESCRIPTION ================= -->
+
+<section class="py-8 border-b border-gray-200">
+
+    <!-- Section Heading -->
+    <div class="flex items-center gap-3 mb-6">
+
+        <!-- Description Icon -->
+        <div class="w-10 h-10 rounded-xl bg-rose-50 flex items-center justify-center">
+
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.8"
+                stroke="currentColor"
+                class="w-5 h-5 text-rose-500">
+
+                <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 0H6.375A2.25 2.25 0 0 0 4.125 4.5v15A2.25 2.25 0 0 0 6.375 21.75h11.25a2.25 2.25 0 0 0 2.25-2.25v-5.25M8.25 2.25V5.625A2.25 2.25 0 0 0 10.5 7.875h3.375M8.25 12h7.5M8.25 15.75h7.5" />
+
+            </svg>
+
+        </div>
+
+        <div>
+
+            <h3 class="text-xl font-semibold text-gray-900">
+                Description
+            </h3>
+
+            <p class="text-sm text-gray-500 mt-0.5">
+                About this property
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- Description Card -->
+    <div
+        class="rounded-2xl
+               border border-gray-200
+               bg-gray-50
+               p-5
+               hover:bg-white
+               hover:shadow-sm
+               transition duration-200">
+
+        <p class="text-gray-700 leading-7 text-base">
+            <%= home.description %>
+        </p>
+
+    </div>
+
+</section>
+
+
+                <!-- ================= LOCATION ================= -->
+
+<section class="py-8 border-b border-gray-200">
+
+    <!-- Section Heading -->
+    <div class="flex items-center gap-3 mb-6">
+
+        <div class="w-10 h-10 rounded-xl bg-rose-50 flex items-center justify-center">
+
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.8"
+                stroke="currentColor"
+                class="w-5 h-5 text-rose-500">
+
+                <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+
+                <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M19.5 10.5c0 7.142-7.5 11-7.5 11s-7.5-3.858-7.5-11a7.5 7.5 0 1 1 15 0Z" />
+
+            </svg>
+
+        </div>
+
+        <div>
+
+            <h3 class="text-xl font-semibold text-gray-900">
+                Location
+            </h3>
+
+            <p class="text-sm text-gray-500 mt-0.5">
+                Where you'll be staying
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- Location Card -->
+    <div
+        class="flex items-center gap-5
+               rounded-2xl
+               border border-gray-200
+               bg-gray-50
+               p-5
+               hover:bg-white
+               hover:shadow-sm
+               transition duration-200">
+
+        <!-- Location Details -->
+        <div>
+
+            <p class="text-lg font-semibold text-gray-900 mt-1">
+                <%= home.location %>
+            </p>
+
+            <p class="text-sm text-gray-500 mt-1">
+                Explore this beautiful location and its surroundings.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+                <!-- ================= PROPERTY TYPE ================= -->
+
+<section class="py-8 border-b border-gray-200">
+
+    <!-- Section Heading -->
+    <div class="flex items-center gap-3 mb-6">
+
+        <div class="w-10 h-10 rounded-xl bg-rose-50 flex items-center justify-center">
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.8"
+                stroke="currentColor"
+                class="w-5 h-5 text-rose-500">
+
+                <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="m2.25 12 9.04-9.04a1 1 0 0 1 1.42 0L21.75 12
+                       M4.5 9.75V19.5a1.5 1.5 0 0 0 1.5 1.5h12
+                       a1.5 1.5 0 0 0 1.5-1.5V9.75
+                       M9 21v-6.75h6V21" />
+
+            </svg>
+        </div>
+
+        <div>
+            <h3 class="text-xl font-semibold text-gray-900">
+                Property type
+            </h3>
+
+            <p class="text-sm text-gray-500 mt-0.5">
+                Details about this stay
+            </p>
+        </div>
+
+    </div>
+
+
+    <!-- Property Card -->
+    <div
+        class="flex items-center gap-5
+               rounded-2xl
+               border border-gray-200
+               bg-gray-50
+               p-5
+               hover:bg-white
+               hover:shadow-sm
+               transition duration-200">
+
+
+        <!-- Content -->
+        <div>
+
+            <p class="text-lg font-semibold text-gray-900 mt-1">
+                <%= home.propertyType %>
+            </p>
+
+            <p class="text-sm text-gray-500 mt-1">
+                A comfortable place designed for your stay.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= AMENITIES ================= -->
+
+<section class="py-8 border-b border-gray-200">
+
+    <!-- Heading -->
+    <div class="mb-6">
+
+        <h3 class="text-xl font-semibold text-gray-900">
+            What this place offers
+        </h3>
+
+        <p class="text-sm text-gray-500 mt-1">
+            Popular amenities available at this property
+        </p>
+
+    </div>
+
+
+    <!-- Amenities Grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+
+
+        <!-- ================= WIFI ================= -->
+
+        <% if (home.amenities && home.amenities.includes("WiFi")) { %>
+
+        <div
+            class="group flex items-center gap-4
+                   rounded-2xl
+                   border border-gray-200
+                   px-5 py-4
+                   bg-white
+                   hover:border-gray-300
+                   hover:shadow-sm
+                   transition duration-200">
+
+            <div
+                class="w-11 h-11
+                       rounded-xl
+                       bg-gray-100
+                       flex items-center justify-center
+                       group-hover:bg-rose-50
+                       transition">
+
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.8"
+                    stroke="currentColor"
+                    class="w-5 h-5 text-gray-700 group-hover:text-rose-500">
+
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M8.111 16.404a5.5 5.5 0 0 1 7.778 0
+                           M5.282 13.575a9.5 9.5 0 0 1 13.436 0
+                           M2.454 10.747a13.5 13.5 0 0 1 19.092 0
+                           M12 20.25h.008v.008H12v-.008Z"/>
+
+                </svg>
+
+            </div>
+
+            <div>
+                <p class="font-medium text-gray-900">
+                    WiFi
+                </p>
+
+                <p class="text-sm text-gray-500">
+                    Fast and reliable internet
+                </p>
+            </div>
+
+        </div>
+
+        <% } %>
+
+
+        <!-- ================= AC ================= -->
+
+        <% if (home.amenities && home.amenities.includes("AC")) { %>
+
+        <div
+            class="group flex items-center gap-4
+                   rounded-2xl
+                   border border-gray-200
+                   px-5 py-4
+                   bg-white
+                   hover:border-gray-300
+                   hover:shadow-sm
+                   transition duration-200">
+
+            <div
+                class="w-11 h-11 rounded-xl bg-gray-100
+                       flex items-center justify-center
+                       group-hover:bg-rose-50 transition">
+
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.8"
+                    stroke="currentColor"
+                    class="w-5 h-5 text-gray-700 group-hover:text-rose-500">
+
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M12 2v20
+                           M4.93 6l14.14 12
+                           M19.07 6 4.93 18
+                           M2 12h20"/>
+
+                </svg>
+
+            </div>
+
+            <div>
+                <p class="font-medium text-gray-900">
+                    Air Conditioning
+                </p>
+
+                <p class="text-sm text-gray-500">
+                    Stay cool and comfortable
+                </p>
+            </div>
+
+        </div>
+
+        <% } %>
+
+
+        <!-- ================= PARKING ================= -->
+
+        <% if (home.amenities && home.amenities.includes("Parking")) { %>
+
+        <div
+            class="group flex items-center gap-4
+                   rounded-2xl border border-gray-200
+                   px-5 py-4 bg-white
+                   hover:border-gray-300
+                   hover:shadow-sm
+                   transition duration-200">
+
+            <div
+                class="w-11 h-11 rounded-xl bg-gray-100
+                       flex items-center justify-center
+                       group-hover:bg-rose-50 transition">
+
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.8"
+                    stroke="currentColor"
+                    class="w-5 h-5 text-gray-700 group-hover:text-rose-500">
+
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M8 20V4h5a4 4 0 110 8H8"/>
+
+                </svg>
+
+            </div>
+
+            <div>
+                <p class="font-medium text-gray-900">
+                    Free Parking
+                </p>
+
+                <p class="text-sm text-gray-500">
+                    Convenient parking available
+                </p>
+            </div>
+
+        </div>
+
+        <% } %>
+
+
+        <!-- ================= KITCHEN ================= -->
+
+        <% if (home.amenities && home.amenities.includes("Kitchen")) { %>
+
+        <div
+            class="group flex items-center gap-4
+                   rounded-2xl border border-gray-200
+                   px-5 py-4 bg-white
+                   hover:border-gray-300
+                   hover:shadow-sm
+                   transition duration-200">
+
+            <div
+                class="w-11 h-11 rounded-xl bg-gray-100
+                       flex items-center justify-center
+                       group-hover:bg-rose-50 transition">
+
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.8"
+                    stroke="currentColor"
+                    class="w-5 h-5 text-gray-700 group-hover:text-rose-500">
+
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M7 2v10
+                           M5 2v4
+                           M9 2v4
+                           M7 12v10
+                           M16 2v20
+                           M16 2c2 2 2 5 0 7"/>
+
+                </svg>
+
+            </div>
+
+            <div>
+                <p class="font-medium text-gray-900">
+                    Kitchen
+                </p>
+
+                <p class="text-sm text-gray-500">
+                    Fully equipped kitchen
+                </p>
+            </div>
+
+        </div>
+
+        <% } %>
+
+
+        <!-- ================= POOL ================= -->
+
+        <% if (home.amenities && home.amenities.includes("Pool")) { %>
+
+        <div
+            class="group flex items-center gap-4
+                   rounded-2xl border border-gray-200
+                   px-5 py-4 bg-white
+                   hover:border-gray-300
+                   hover:shadow-sm
+                   transition duration-200">
+
+            <div
+                class="w-11 h-11 rounded-xl bg-gray-100
+                       flex items-center justify-center
+                       group-hover:bg-rose-50 transition">
+
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.8"
+                    stroke="currentColor"
+                    class="w-5 h-5 text-gray-700 group-hover:text-rose-500">
+
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M3 18c2 2 4 2 6 0s4-2 6 0 4 2 6 0
+                           M8 14V9a4 4 0 118 0v5"/>
+
+                </svg>
+
+            </div>
+
+            <div>
+                <p class="font-medium text-gray-900">
+                    Swimming Pool
+                </p>
+
+                <p class="text-sm text-gray-500">
+                    Relax by the pool
+                </p>
+            </div>
+
+        </div>
+
+        <% } %>
+
+
+        <!-- ================= TV ================= -->
+
+        <% if (home.amenities && home.amenities.includes("TV")) { %>
+
+        <div
+            class="group flex items-center gap-4
+                   rounded-2xl border border-gray-200
+                   px-5 py-4 bg-white
+                   hover:border-gray-300
+                   hover:shadow-sm
+                   transition duration-200">
+
+            <div
+                class="w-11 h-11 rounded-xl bg-gray-100
+                       flex items-center justify-center
+                       group-hover:bg-rose-50 transition">
+
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.8"
+                    stroke="currentColor"
+                    class="w-5 h-5 text-gray-700 group-hover:text-rose-500">
+
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M3 6h18v12H3V6Zm6-3 3 3 3-3"/>
+
+                </svg>
+
+            </div>
+
+            <div>
+                <p class="font-medium text-gray-900">
+                    Television
+                </p>
+
+                <p class="text-sm text-gray-500">
+                    Entertainment during your stay
+                </p>
+            </div>
+
+        </div>
+
+        <% } %>
+
+    </div>
+
+</section>
+
+            </div>
+
+
+            <!-- ================= BOOKING CARD ================= -->
+
+            <div class="lg:col-span-1">
+
+                <div
+                    class="sticky top-6
+                           bg-white
+                           border border-gray-200
+                           rounded-2xl
+                           shadow-lg
+                           p-6">
+
+
+                    <!-- PRICE -->
+
+                    <div class="flex items-baseline gap-1 mb-5">
+
+                        <span class="text-2xl font-semibold text-gray-900">
+                    
+                            ₹<%= home.price %>
+
+    
+                        </span>
+
+                        <span class="text-gray-600">
+                           / night
+                        </span>
+
+                    </div>
+
+
+                    <!-- Dynamic Rating -->
+
+<div
+    class="flex items-center justify-between
+           border border-gray-300
+           rounded-xl
+           px-4 py-3
+           mb-5">
+
+    <div>
+
+        <p class="text-xs font-semibold text-gray-500 uppercase">
+            Guest Rating
+        </p>
+
+        <% if(home.reviewCount > 0){ %>
+
+            <div class="flex items-center gap-2 mt-1">
+
+                <span class="text-yellow-500 text-lg">
+                    ⭐
+                </span>
+
+                <span class="font-semibold text-gray-900">
+                    <%= Number(home.averageRating).toFixed(1) %>
+                </span>
+
+                <span class="text-gray-500 text-sm">
+                    (<%= home.reviewCount %> Reviews)
+                </span>
+
+            </div>
+
+        <% } else { %>
+
+            <p class="text-gray-500 mt-1">
+                No reviews yet
+            </p>
+
+        <% } %>
+
+    </div>
+
+</div>
+
+
+                    <!-- LOCATION -->
+
+                    <div
+                        class="border border-gray-300
+                               rounded-xl
+                               px-4 py-3
+                               mb-5">
+
+                        <p class="text-xs font-semibold text-gray-500 uppercase">
+                            Location
+                        </p>
+
+                        <p class="text-sm font-medium text-gray-900 mt-1">
+                            <%= home.location %>
+                        </p>
+
+                    </div>
+
+                    <!-- ================= RESERVE BUTTON ================= -->
+                    <div>
+                        <a
+                            href="/booking/<%= home._id %>"
+                            class="group w-full flex items-center justify-center gap-2
+                           bg-blue-500 hover:bg-blue-600
+                           text-white py-3 rounded-xl
+                           font-semibold transition duration-300 mb-4">
+
+                    <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke-width="2"
+                            stroke="currentColor"
+                            class="w-6 h-6 transition-transform duration-300 group-hover:scale-110">
+
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M8.25 18.75a1.5 1.5 0 0 1-1.5-1.5V9.75h10.5v7.5a1.5 1.5 0 0 1-1.5 1.5h-7.5ZM9 9.75V6.75A3 3 0 0 1 12 3.75a3 3 0 0 1 3 3v3" />
+                    </svg>
+
+                            <span>Reserve Now</span>
+
+                    </a>
+                </div>
+
+                
+
+
+                    <!-- ================= ACTIONS ================= -->
+
+                    <div class="space-y-3">
+
+                        <!-- Favourite -->
+
+                        <div class="w-full">
+
+                            <%- include('../partials/favourite') %>
+
+                        </div>
+
+
+                        <!-- Back -->
+
+                        <a
+                            href="/homes"
+                            class="w-full
+                                   flex items-center justify-center
+                                   gap-2
+                                   border border-gray-300
+                                   hover:border-gray-900
+                                   hover:bg-gray-50
+                                   text-gray-900
+                                   py-3
+                                   rounded-xl
+                                   font-semibold
+                                   transition duration-200">
+
+                            ←
+                            <span>Back to Homes</span>
+
+                        </a>
+
+                    </div>
+
+
+                    <!-- INFO -->
+
+                    <div class="mt-5 pt-5 border-t border-gray-200">
+
+                        <div class="flex items-center gap-3 text-sm text-gray-600">
+
+                            <span class="text-lg">
+                                🛡️
+                            </span>
+
+                            <span>
+                                Your stay is protected with secure booking.
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Reviews Section -->
+
+<section class="mt-16">
+
+    <h2 class="text-3xl font-bold mb-8">
+        Guest Reviews
+    </h2>
+
+    <% if(reviews.length === 0){ %>
+
+        <div class="bg-white rounded-2xl shadow p-8 text-center">
+
+            <div class="text-5xl mb-3">
+                ⭐
+            </div>
+
+            <h3 class="text-xl font-semibold">
+                No Reviews Yet
+            </h3>
+
+            <p class="text-gray-500 mt-2">
+                Be the first guest to review this property.
+            </p>
+
+        </div>
+
+    <% } else { %>
+
+        <% reviews.forEach(review => { %>
+
+            <div class="bg-white rounded-2xl shadow p-6 mb-5">
+
+                <div class="flex justify-between items-start">
+
+                    <div>
+
+                        <h3 class="font-semibold text-lg">
+                            <%= review.user.firstName %> <%= review.user.lastName %>
+                        </h3>
+
+                        <p class="text-gray-500 text-sm mt-1">
+                            <%= review.createdAt.toDateString() %>
+                        </p>
+
+                    </div>
+
+                    <div class="text-yellow-500 text-lg">
+                        <%= "⭐".repeat(review.rating) %>
+                    </div>
+
+                </div>
+
+                <p class="mt-4 text-gray-700 leading-7">
+                    <%= review.comment %>
+                </p>
+                <% if (
+    isLoggedIn &&
+    user &&
+    review.user &&
+    review.user._id.toString() === user.id
+) { %>
+
+<form action="/review/delete/<%= review._id %>" method="POST">
+
+    <button
+        type="submit"
+        class="mt-4 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg">
+
+        Delete Review
+
+    </button>
+
+</form>
+
+<% } %>
+
+            </div>
+
+        <% }) %>
+
+    <% } %>
+
+</section>
+
+    </main>
+
+
+</body>
+
+</html>
