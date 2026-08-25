@@ -1,4 +1,3 @@
-const { registeredHomes } = require("../../LECTURE-3/PRACTICE-SET/AIRBNB/routes/hostRouter");
 const Home = require("../models/home");
 const User = require("../models/user");
 const Booking = require("../models/booking");
@@ -263,7 +262,7 @@ exports.getHomeDetails = async (req, res, next) => {
         const reviews = await Review.find({
             home: homeId
         })
-        .populate("user", "firstName lastName_id")
+        .populate("user", "firstName lastName")
         .sort({ createdAt: -1 });
 
         res.render("store/home-detail", {
