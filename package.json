@@ -2,21 +2,22 @@
   "name": "airbnb",
   "version": "1.0.0",
   "main": "index.js",
-"scripts": {
-  "dev": "nodemon app.js",
-  "tailwind": "npx @tailwindcss/cli -i ./input.css -o ./public/output.css --watch",
-  "build": "npx @tailwindcss/cli -i ./input.css -o ./public/output.css --minify",
-  "start": "node app.js"
-},
+  "scripts": {
+    "dev": "nodemon app.js",
+    "tailwind": "npx @tailwindcss/cli -i ./input.css -o ./public/output.css --watch",
+    "build": "npx @tailwindcss/cli -i ./input.css -o ./public/output.css --minify",
+    "start": "node app.js"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "devDependencies": {
+    "@tailwindcss/cli": "^4.3.3",
+    "tailwindcss": "^4.3.3",
     "nodemon": "^3.1.14"
   },
   "dependencies": {
-    "@tailwindcss/cli": "^4.3.3",
     "bcryptjs": "^3.0.3",
     "body-parser": "^2.3.0",
     "connect-flash": "^0.1.1",
@@ -30,7 +31,6 @@
     "mongoose": "^9.8.1",
     "multer": "^2.2.0",
     "mysql2": "^3.23.2",
-    "razorpay": "^2.9.8",
-    "tailwindcss": "^4.3.3"
+    "razorpay": "^2.9.8"
   }
 }
