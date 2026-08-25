@@ -2,7 +2,7 @@
   "name": "airbnb",
   "version": "1.0.0",
   "main": "index.js",
-  "scripts": {
+"scripts": {
   "dev": "nodemon app.js",
   "tailwind": "npx @tailwindcss/cli -i ./input.css -o ./public/output.css --watch",
   "build": "npx @tailwindcss/cli -i ./input.css -o ./public/output.css --minify",
