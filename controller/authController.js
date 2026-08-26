@@ -478,7 +478,7 @@ exports.postChangePassword = async (req, res, next) => {
       return res.status(404).send("User not found");
     }
 
-    // 7. Compare old password
+    // 7. Compare current password
     const isPasswordCorrect = await bcrypt.compare(
       currentPassword,
       user.password
@@ -492,7 +492,8 @@ exports.postChangePassword = async (req, res, next) => {
     const hashedPassword = await bcrypt.hash(newPassword, 12);
 
     // 9. Update password
-    await User.updatePassword(userId, hashedPassword);
+    user.password = hashedPassword;
+    await user.save();
 
     // 10. Redirect to profile
     res.redirect("/profile");
