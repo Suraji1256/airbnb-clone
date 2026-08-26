@@ -375,13 +375,59 @@ exports.getEditProfile = (req, res, next) => {
   });
 };
 
-exports.postEditProfile = (req, res, next) => {
-  const { name, email } = req.body;
+exports.postEditProfile = async (req, res, next) => {
+    try {
+        // Check login
+        if (!req.session.user) {
+            return res.redirect("/login");
+        }
 
-  req.session.user.name = name;
-  req.session.user.email = email;
+        const { firstName, lastName, email } = req.body;
 
-  res.redirect("/profile");
+        // Basic validation
+        if (!firstName || !lastName || !email) {
+            return res.status(400).send("All fields are required");
+        }
+
+        const userId = req.session.user.id;
+
+        // Update MongoDB
+        const user = await User.findByIdAndUpdate(
+            userId,
+            {
+                firstName: firstName.trim(),
+                lastName: lastName.trim(),
+                email: email.trim().toLowerCase()
+            },
+            {
+                new: true,
+                runValidators: true
+            }
+        );
+
+        if (!user) {
+            return res.status(404).send("User not found");
+        }
+
+        // Update session
+        req.session.user.firstName = user.firstName;
+        req.session.user.lastName = user.lastName;
+        req.session.user.email = user.email;
+
+        // Save session before redirect
+        req.session.save(err => {
+            if (err) {
+                console.log("Session save error:", err);
+                return next(err);
+            }
+
+            res.redirect("/profile");
+        });
+
+    } catch (err) {
+        console.log("Edit profile error:", err);
+        next(err);
+    }
 };
 
 exports.getChangePassword = (req, res, next) => {

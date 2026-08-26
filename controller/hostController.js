@@ -70,7 +70,7 @@ exports.postAddHome = async (req, res, next) => {
             return res.status(400).send("No file uploaded.");
         }
 
-        const photo = "/uploads/" + req.file.filename;
+        const photo = req.file.path;;
 
         const home = new Home({
 
@@ -146,13 +146,8 @@ exports.postEditHome = async (req, res, next) => {
 
         // Update photo only if a new photo was uploaded
         if (req.file) {
-            fs.unlink(home.photo, (err) => {
-                if (err) {
-                    console.error("Error deleting old photo:", err);
-                }
-            });
-            home.photo = req.file.path;
-        }
+    home.photo = req.file.path;
+}
 
         // Save changes
         const result = await home.save();
