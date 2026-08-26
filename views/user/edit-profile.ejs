@@ -27,13 +27,13 @@
                     </label>
 
                     <input
-                        type="text"
-                        id="name"
-                        name="name"
-                        value="<%= user?.name || '' %>"
-                        required
-                        class="w-full px-4 py-3 border border-gray-300 rounded-xl
-                               focus:outline-none focus:ring-2 focus:ring-red-400">
+    type="text"
+    id="name"
+    name="name"
+    value="<%= `${user?.firstName || ''} ${user?.lastName || ''}`.trim() %>"
+    required
+    class="w-full px-4 py-3 border border-gray-300 rounded-xl
+           focus:outline-none focus:ring-2 focus:ring-red-400">
                 </div>
 
                 <!-- Email -->
@@ -45,13 +45,13 @@
                     </label>
 
                     <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        value="<%= user?.email || '' %>"
-                        required
-                        class="w-full px-4 py-3 border border-gray-300 rounded-xl
-                               focus:outline-none focus:ring-2 focus:ring-red-400">
+    type="email"
+    id="email"
+    name="email"
+    value="<%= user?.email || '' %>"
+    required
+    class="w-full px-4 py-3 border border-gray-300 rounded-xl
+           focus:outline-none focus:ring-2 focus:ring-red-400">
                 </div>
 
                 <!-- Buttons -->

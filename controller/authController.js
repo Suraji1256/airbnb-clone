@@ -365,69 +365,110 @@ exports.getProfile = async (req, res, next) => {
         next(error);
     }
 };
-
 exports.getEditProfile = (req, res, next) => {
+  if (!req.session.user) {
+    return res.redirect("/login");
+  }
+
   res.render("user/edit-profile", {
     pageTitle: "Edit Profile",
     currentPage: "profile",
     user: req.session.user,
-    
   });
 };
 
+
 exports.postEditProfile = async (req, res, next) => {
-    try {
-        // Check login
-        if (!req.session.user) {
-            return res.redirect("/login");
-        }
-
-        const { firstName, lastName, email } = req.body;
-
-        // Basic validation
-        if (!firstName || !lastName || !email) {
-            return res.status(400).send("All fields are required");
-        }
-
-        const userId = req.session.user.id;
-
-        // Update MongoDB
-        const user = await User.findByIdAndUpdate(
-            userId,
-            {
-                firstName: firstName.trim(),
-                lastName: lastName.trim(),
-                email: email.trim().toLowerCase()
-            },
-            {
-                new: true,
-                runValidators: true
-            }
-        );
-
-        if (!user) {
-            return res.status(404).send("User not found");
-        }
-
-        // Update session
-        req.session.user.firstName = user.firstName;
-        req.session.user.lastName = user.lastName;
-        req.session.user.email = user.email;
-
-        // Save session before redirect
-        req.session.save(err => {
-            if (err) {
-                console.log("Session save error:", err);
-                return next(err);
-            }
-
-            res.redirect("/profile");
-        });
-
-    } catch (err) {
-        console.log("Edit profile error:", err);
-        next(err);
+  try {
+    // 1. Check login
+    if (!req.session.user) {
+      return res.redirect("/login");
     }
+
+    const { name, email } = req.body;
+
+    // 2. Basic validation
+    if (!name || !email) {
+      return res.status(400).send("Name and email are required");
+    }
+
+    // 3. Clean input
+    const cleanName = name.trim();
+    const cleanEmail = email.trim().toLowerCase();
+
+    // 4. Validate name
+    if (cleanName.length < 2) {
+      return res.status(400).send("Name must be at least 2 characters");
+    }
+
+    // 5. Split full name
+    const nameParts = cleanName.split(/\s+/);
+
+    const cleanFirstName = nameParts[0];
+    const cleanLastName = nameParts.slice(1).join(" ");
+
+    // 6. Validate email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailRegex.test(cleanEmail)) {
+      return res.status(400).send("Please enter a valid email address");
+    }
+
+    const userId = req.session.user.id;
+
+    // 7. Check whether email is already used
+    const existingUser = await User.findOne({
+      email: cleanEmail,
+      _id: { $ne: userId }
+    });
+
+    if (existingUser) {
+      return res.status(400).send("Email is already registered");
+    }
+
+    // 8. Update MongoDB
+    const user = await User.findByIdAndUpdate(
+      userId,
+      {
+        firstName: cleanFirstName,
+        lastName: cleanLastName,
+        email: cleanEmail
+      },
+      {
+        new: true,
+        runValidators: true
+      }
+    );
+
+    if (!user) {
+      return res.status(404).send("User not found");
+    }
+
+    // 9. Update session
+    req.session.user.firstName = user.firstName;
+    req.session.user.lastName = user.lastName;
+    req.session.user.email = user.email;
+
+    // 10. Save session
+    req.session.save(err => {
+      if (err) {
+        console.log("Session save error:", err);
+        return next(err);
+      }
+
+      res.redirect("/profile");
+    });
+
+  } catch (err) {
+    console.log("Edit profile error:", err);
+
+    // Duplicate email
+    if (err.code === 11000) {
+      return res.status(400).send("Email is already registered");
+    }
+
+    next(err);
+  }
 };
 
 exports.getChangePassword = (req, res, next) => {
