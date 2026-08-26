@@ -281,18 +281,13 @@ exports.postLogin = async (req, res, next) => {
         req.session.isLoggedIn = true;
 
         req.session.user = {
-
-            id: user._id.toString(),
-
-            firstName: user.firstName,
-
-            lastName: user.lastName,
-
-            email: user.email,
-
-            userType: user.userType
-
-        };
+    id: user._id.toString(),
+    firstName: user.firstName,
+    lastName: user.lastName,
+    email: user.email,
+    userType: user.userType,
+    profilePhoto: user.profilePhoto || ""
+};
 
         await req.session.save();
 
@@ -398,7 +393,9 @@ exports.postEditProfile = async (req, res, next) => {
 
     // 4. Validate name
     if (cleanName.length < 2) {
-      return res.status(400).send("Name must be at least 2 characters");
+      return res.status(400).send(
+        "Name must be at least 2 characters"
+      );
     }
 
     // 5. Split full name
@@ -411,7 +408,9 @@ exports.postEditProfile = async (req, res, next) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     if (!emailRegex.test(cleanEmail)) {
-      return res.status(400).send("Please enter a valid email address");
+      return res.status(400).send(
+        "Please enter a valid email address"
+      );
     }
 
     const userId = req.session.user.id;
@@ -423,17 +422,27 @@ exports.postEditProfile = async (req, res, next) => {
     });
 
     if (existingUser) {
-      return res.status(400).send("Email is already registered");
+      return res.status(400).send(
+        "Email is already registered"
+      );
     }
 
-    // 8. Update MongoDB
+    // 8. Prepare update data
+    const updateData = {
+      firstName: cleanFirstName,
+      lastName: cleanLastName,
+      email: cleanEmail
+    };
+
+    // 9. Add profile photo if uploaded
+    if (req.file) {
+      updateData.profilePhoto = req.file.path;
+    }
+
+    // 10. Update MongoDB
     const user = await User.findByIdAndUpdate(
       userId,
-      {
-        firstName: cleanFirstName,
-        lastName: cleanLastName,
-        email: cleanEmail
-      },
+      updateData,
       {
         new: true,
         runValidators: true
@@ -444,12 +453,13 @@ exports.postEditProfile = async (req, res, next) => {
       return res.status(404).send("User not found");
     }
 
-    // 9. Update session
+    // 11. Update session
     req.session.user.firstName = user.firstName;
     req.session.user.lastName = user.lastName;
     req.session.user.email = user.email;
+    req.session.user.profilePhoto = user.profilePhoto || "";
 
-    // 10. Save session
+    // 12. Save session
     req.session.save(err => {
       if (err) {
         console.log("Session save error:", err);
@@ -464,7 +474,9 @@ exports.postEditProfile = async (req, res, next) => {
 
     // Duplicate email
     if (err.code === 11000) {
-      return res.status(400).send("Email is already registered");
+      return res.status(400).send(
+        "Email is already registered"
+      );
     }
 
     next(err);
