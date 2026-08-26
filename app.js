@@ -90,14 +90,18 @@ app.use('/uploads', express.static(path.join(rootDir, 'uploads')));
 app.use('/host/uploads', express.static(path.join(rootDir, 'uploads')));
 app.use('/homes/uploads', express.static(path.join(rootDir, 'uploads')));
 
+app.set("trust proxy", 1);
+
 app.use(session({
-  secret: SESSION_SECRET, // Replace
-  resave: false,
-  saveUninitialized: true,
-  store: store,
-  cookie: {
+    secret: SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+
+    store: store,
+
+    cookie: {
         httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
+        secure: true,
         sameSite: "lax",
         maxAge: 1000 * 60 * 60 * 24
     }

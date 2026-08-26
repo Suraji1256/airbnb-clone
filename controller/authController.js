@@ -342,24 +342,28 @@ exports.postLogout = (req, res, next) => {
 const Home = require("../models/home");
 
 exports.getProfile = async (req, res, next) => {
-  try {
+    try {
 
-    const userId = req.session.user._id;
+        if (!req.session.user) {
+            return res.redirect("/login");
+        }
 
-    const myListings = await Home.find({
-      owner: userId
-    }).sort({ createdAt: -1 });
+        const userId = req.session.user.id;
 
-    res.render("user/profile", {
-      user: req.session.user,
-      myListings,
-      pageTitle: "My Profile",
-      currentPage: "profile",
-    });
+        const myListings = await Home.find({
+            owner: userId
+        }).sort({ createdAt: -1 });
 
-  } catch (error) {
-    next(error);
-  }
+        res.render("user/profile", {
+            user: req.session.user,
+            myListings,
+            pageTitle: "My Profile",
+            currentPage: "profile"
+        });
+
+    } catch (error) {
+        next(error);
+    }
 };
 
 exports.getEditProfile = (req, res, next) => {
